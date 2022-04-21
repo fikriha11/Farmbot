@@ -28,17 +28,20 @@ long nMM = 150;
 int speedDelay = 300;
 
 /** RTC **/
-int tNow = 0;
-int bNow = 0;
-int hNow = 0;
-int mNow = 0;
+
+int tNow = 0; // Tanggal
+int bNow = 0; // Bulan
+int yNow = 0; // Tahun
+
+int hNow = 0; // Jam
+int mNow = 0; // Menit
 
 struct SensorFlow {
   int Count;
 } FlowA, FlowB;
 
 struct Tanaman {
-  int Usia, JenisTanaman, Tanggal, Bulan, Panen;
+  int Usia, JenisTanaman, Tanggal, Bulan, Tahun, Panen;
 } Tanaman1, Tanaman2, Tanaman3, Tanaman4, Tanaman5, Tanaman6, Tanaman7, Tanaman8;
 
 const char* nTanaman[] = {
@@ -65,49 +68,57 @@ void INISIALISASI() {
   Tanaman1.JenisTanaman = 2;
   Tanaman1.Tanggal = 3;
   Tanaman1.Bulan = 4;
-  Tanaman1.Panen = 5;
+  Tanaman1.Tahun = 5;
+  Tanaman1.Panen = 6;
 
-  Tanaman2.Usia = 6;
-  Tanaman2.JenisTanaman = 7;
-  Tanaman2.Tanggal = 8;
-  Tanaman2.Bulan = 9;
-  Tanaman2.Panen = 10;
+  Tanaman2.Usia = 7;
+  Tanaman2.JenisTanaman = 8;
+  Tanaman2.Tanggal = 9;
+  Tanaman2.Bulan = 10;
+  Tanaman2.Tahun = 11;
+  Tanaman2.Panen = 12;
 
-  Tanaman3.Usia = 11;
-  Tanaman3.JenisTanaman = 12;
-  Tanaman3.Tanggal = 13;
-  Tanaman3.Bulan = 14;
-  Tanaman3.Panen = 15;
+  Tanaman3.Usia = 13;
+  Tanaman3.JenisTanaman = 14;
+  Tanaman3.Tanggal = 15;
+  Tanaman3.Bulan = 16;
+  Tanaman3.Tahun = 17;
+  Tanaman3.Panen = 18;
 
-  Tanaman4.Usia = 16;
-  Tanaman4.JenisTanaman = 17;
-  Tanaman4.Tanggal = 18;
-  Tanaman4.Bulan = 19;
-  Tanaman4.Panen = 20;
+  Tanaman4.Usia = 19;
+  Tanaman4.JenisTanaman = 20;
+  Tanaman4.Tanggal = 21;
+  Tanaman4.Bulan = 22;
+  Tanaman4.Tahun = 23;
+  Tanaman4.Panen = 24;
 
-  Tanaman5.Usia = 21;
-  Tanaman5.JenisTanaman = 22;
-  Tanaman5.Tanggal = 23;
-  Tanaman5.Bulan = 24;
-  Tanaman5.Panen = 25;
+  Tanaman5.Usia = 25;
+  Tanaman5.JenisTanaman = 26;
+  Tanaman5.Tanggal = 27;
+  Tanaman5.Bulan = 28;
+  Tanaman5.Tahun = 29;
+  Tanaman5.Panen = 30;
 
-  Tanaman6.Usia = 26;
-  Tanaman6.JenisTanaman = 27;
-  Tanaman6.Tanggal = 28;
-  Tanaman6.Bulan = 29;
-  Tanaman6.Panen = 30;
+  Tanaman6.Usia = 31;
+  Tanaman6.JenisTanaman = 32;
+  Tanaman6.Tanggal = 33;
+  Tanaman6.Bulan = 34;
+  Tanaman6.Tahun = 35;
+  Tanaman6.Panen = 36;
 
-  Tanaman7.Usia = 31;
-  Tanaman7.JenisTanaman = 32;
-  Tanaman7.Tanggal = 33;
-  Tanaman7.Bulan = 34;
-  Tanaman7.Panen = 35;
+  Tanaman7.Usia = 37;
+  Tanaman7.JenisTanaman = 38;
+  Tanaman7.Tanggal = 39;
+  Tanaman7.Bulan = 40;
+  Tanaman7.Tahun = 41;
+  Tanaman7.Panen = 42;
 
-  Tanaman8.Usia = 36;
-  Tanaman8.JenisTanaman = 37;
-  Tanaman8.Tanggal = 38;
-  Tanaman8.Bulan = 39;
-  Tanaman8.Panen = 40;
+  Tanaman8.Usia = 43;
+  Tanaman8.JenisTanaman = 44;
+  Tanaman8.Tanggal = 45;
+  Tanaman8.Bulan = 46;
+  Tanaman8.Tahun = 47;
+  Tanaman8.Panen = 48;
 
 }
 
@@ -151,8 +162,9 @@ void loop() {
   // trialSwitch();
   // trialXYZ();
   // Running();
+  
+  Serial.println(HitungUmur(21, 7, 2021));
 }
-
 
 int Takaran(int JenisTanaman, int Umur) {
   int Takar = 0;
@@ -176,16 +188,23 @@ int Takaran(int JenisTanaman, int Umur) {
 }
 
 
-int HitungUmur(int Tanggal, int Bulan) {
+int HitungUmur(int Tanggal, int Bulan, int Tahun) {
   DateTime now = rtc.now();
-  int Tanam = Tanggal + (Bulan * 30 );  // Total tanggal Tanam
+  int Tanam = Tanggal + (Bulan * 30 ) + (Tahun * 365);  // Total tanggal Tanam
 
   tNow = now.day(), DEC; // Tanggal Sekarang
   bNow =  now.month(), DEC; // Bulan Sekarang
+  yNow = now.year(), DEC; // Tahun Sekarang
 
-  int Now = tNow + (bNow * 30);  // Total
-  float cBulan = abs(Now - Tanam) / 30;
-  float cMinggu = cBulan * 4;
+  tNow = 21; // Tanggal Sekarang
+  bNow = 4; // Bulan Sekarang
+  yNow = 2022; // Tahun Sekarang
+
+  int Now = tNow + (bNow * 30) + (yNow * 365);  // Total
+
+  float cTahun = (Now - Tanam) / 365.0;
+  int cBulan = cTahun * 12;
+  int cMinggu = cBulan * 4;
 
   return cMinggu;
 }
@@ -270,49 +289,49 @@ void excution() {
       delay(500);
       gotoX(50);
       delay(500);
-      Running(EEPROM.read(Tanaman1.JenisTanaman), HitungUmur(EEPROM.read(Tanaman1.Tanggal), EEPROM.read(Tanaman1.Bulan)), EEPROM.read(Tanaman1.Panen));
+      Running(EEPROM.read(Tanaman1.JenisTanaman), HitungUmur(EEPROM.read(Tanaman1.Tanggal), EEPROM.read(Tanaman1.Bulan), EEPROM.read(Tanaman1.Tahun)), EEPROM.read(Tanaman1.Panen));
       break;
     case 2 :
       Serial.println("Tanaman 2A");
       gotoX(160);
       delay(500);
-      Running(EEPROM.read(Tanaman2.JenisTanaman), HitungUmur(EEPROM.read(Tanaman2.Tanggal), EEPROM.read(Tanaman2.Bulan)), EEPROM.read(Tanaman2.Panen));
+      Running(EEPROM.read(Tanaman2.JenisTanaman), HitungUmur(EEPROM.read(Tanaman2.Tanggal), EEPROM.read(Tanaman2.Bulan), EEPROM.read(Tanaman2.Tahun)), EEPROM.read(Tanaman2.Panen));
       break;
     case 3 :
       Serial.println("Tanaman 3A");
       gotoX(160);
       delay(500);
-      Running(EEPROM.read(Tanaman3.JenisTanaman), HitungUmur(EEPROM.read(Tanaman3.Tanggal), EEPROM.read(Tanaman3.Bulan)), EEPROM.read(Tanaman3.Panen));
+      Running(EEPROM.read(Tanaman3.JenisTanaman), HitungUmur(EEPROM.read(Tanaman3.Tanggal), EEPROM.read(Tanaman3.Bulan), EEPROM.read(Tanaman3.Tahun)), EEPROM.read(Tanaman3.Panen));
       break;
     case 4 :
       Serial.println("Tanaman 4A");
       gotoX(160);
       delay(500);
-      Running(EEPROM.read(Tanaman4.JenisTanaman), HitungUmur(EEPROM.read(Tanaman4.Tanggal), EEPROM.read(Tanaman4.Bulan)), EEPROM.read(Tanaman4.Panen));
+      Running(EEPROM.read(Tanaman4.JenisTanaman), HitungUmur(EEPROM.read(Tanaman4.Tanggal), EEPROM.read(Tanaman4.Bulan), EEPROM.read(Tanaman4.Tahun)), EEPROM.read(Tanaman4.Panen));
       break;
     case 5 :
       Serial.println("Tanaman 1B");
       gotoY(140);
       delay(500);
-      Running(EEPROM.read(Tanaman5.JenisTanaman), HitungUmur(EEPROM.read(Tanaman5.Tanggal), EEPROM.read(Tanaman5.Bulan)), EEPROM.read(Tanaman5.Panen));
+      Running(EEPROM.read(Tanaman5.JenisTanaman), HitungUmur(EEPROM.read(Tanaman5.Tanggal), EEPROM.read(Tanaman5.Bulan), EEPROM.read(Tanaman5.Tahun)), EEPROM.read(Tanaman5.Panen));
       break;
     case 6 :
       Serial.println("Tanaman 2B");
       gotoX(-160);
       delay(500);
-      Running(EEPROM.read(Tanaman6.JenisTanaman), HitungUmur(EEPROM.read(Tanaman6.Tanggal), EEPROM.read(Tanaman6.Bulan)), EEPROM.read(Tanaman6.Panen));
+      Running(EEPROM.read(Tanaman6.JenisTanaman), HitungUmur(EEPROM.read(Tanaman6.Tanggal), EEPROM.read(Tanaman6.Bulan), EEPROM.read(Tanaman6.Tahun)), EEPROM.read(Tanaman6.Panen));
       break;
     case 7 :
       Serial.println("Tanaman 3B");
       gotoX(-160);
       delay(500);
-      Running(EEPROM.read(Tanaman7.JenisTanaman), HitungUmur(EEPROM.read(Tanaman7.Tanggal), EEPROM.read(Tanaman7.Bulan)), EEPROM.read(Tanaman7.Panen));
+      Running(EEPROM.read(Tanaman7.JenisTanaman), HitungUmur(EEPROM.read(Tanaman7.Tanggal), EEPROM.read(Tanaman7.Bulan), EEPROM.read(Tanaman7.Tahun)), EEPROM.read(Tanaman7.Panen));
       break;
     case 8 :
       Serial.println("Tanaman 4B");
       gotoX(-160);
       delay(500);
-      Running(EEPROM.read(Tanaman8.JenisTanaman), HitungUmur(EEPROM.read(Tanaman8.Tanggal), EEPROM.read(Tanaman8.Bulan)), EEPROM.read(Tanaman8.Panen));
+      Running(EEPROM.read(Tanaman8.JenisTanaman), HitungUmur(EEPROM.read(Tanaman8.Tanggal), EEPROM.read(Tanaman8.Bulan), EEPROM.read(Tanaman8.Tahun)), EEPROM.read(Tanaman8.Panen));
       break;
     case 9:
       homie();

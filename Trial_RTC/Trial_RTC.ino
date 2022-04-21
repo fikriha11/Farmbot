@@ -9,11 +9,11 @@ void setup () {
   Serial.begin(9600);
   rtc.begin();
 
-  //  if (! rtc.begin()) {
-  //    Serial.println(rtc.begin());
-  //    Serial.flush();
-  //    abort();
-  //  }
+  if (! rtc.begin()) {
+    Serial.println("RTC Not Found");
+    Serial.flush();
+    abort();
+  }
 
   //Atur Waktu
   // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));

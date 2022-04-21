@@ -1,15 +1,18 @@
-tTanam = input("Masukan Tanggal Tanam: ")
-bTanam = input("Masukan Bulan Tanam: ")
-Tanam = int(tTanam) + int(bTanam) * 30
+tanggalTanam = input("Masukan Tanggal Tanam: ")
+bulanTanam = input("Masukan Bulan Tanam: ")
+tahunTanam = input("Masukan Tahun Tanam: ")
+Tanam = int(tanggalTanam) + (int(bulanTanam)*30) + (int(tahunTanam)*365)
 
-tNow = input("Tanggal Sekarang: ")
-bNow = input("Bulan Sekarang: ")
-Now = int(tNow) + int(bNow) * 30
+tanggalNow = input("Tanggal Sekarang: ")
+bulanNow = input("Bulan Sekarang: ")
+tahunNow = input("Tahun Sekarang: ")
+Now = int(tanggalNow) + (int(bulanNow) * 30) + (int(tahunNow) * 365)
 
 
-UmurBulan = (Now-Tanam) / 30
+Umurtahun = (Now - Tanam) / 365
+UmurBulan = Umurtahun * 12
 UmurMinggu = UmurBulan * 4
 UmurHari = UmurMinggu * 7
 
-print("{} Bulan Atau {} Minggu Atau {} Hari".format(
-    int(UmurBulan), int(UmurMinggu), int(UmurHari)))
+print("{} Bulan Atau {} Minggu Atau {} Hari Atau {} Tahun".format(
+    int(UmurBulan), int(UmurMinggu), int(UmurHari), Umurtahun))
