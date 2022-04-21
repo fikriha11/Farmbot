@@ -45,7 +45,7 @@ struct Tanaman {
 } Tanaman1, Tanaman2, Tanaman3, Tanaman4, Tanaman5, Tanaman6, Tanaman7, Tanaman8;
 
 const char* nTanaman[] = {
-  "Kangkung", "Selada", "Pak Coy", "Bayam", "Sawi Pagoda", "kailan", "Sawi", "Daun Mint", "Daun Bawang", "Seledri"
+  "Kangkung", "Selada", "Pak Coy", "Bayam", "Sawi Pagoda", "kailan", "Sawi", "Daun Bawang", "Daun Mint","Seledri"
 };
 const char* nHari[] = {
   "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"
@@ -162,8 +162,20 @@ void loop() {
   // trialSwitch();
   // trialXYZ();
   // Running();
+  Trial();
+}
+
+void Trial(){
+  int Tanaman = 9; 
+  int TanggalTanam = 13;
+  int BulanTanam = 4; 
+  int TahunTanam = 2022;
   
-  Serial.println(HitungUmur(21, 7, 2021));
+  Serial.print(nTanaman[Tanaman]);
+  Serial.print('\t');
+  Serial.print(HitungUmur(TanggalTanam, BulanTanam, TahunTanam));
+  Serial.print('\t');
+  Serial.println(Takaran(Tanaman, HitungUmur(TanggalTanam, BulanTanam, TahunTanam)));
 }
 
 int Takaran(int JenisTanaman, int Umur) {
@@ -203,10 +215,10 @@ int HitungUmur(int Tanggal, int Bulan, int Tahun) {
   int Now = tNow + (bNow * 30) + (yNow * 365);  // Total
 
   float cTahun = (Now - Tanam) / 365.0;
-  int cBulan = cTahun * 12;
-  int cMinggu = cBulan * 4;
+  float cBulan = cTahun * 12.0;
+  float cMinggu = cBulan * 4.0;
 
-  return cMinggu;
+  return int(cMinggu);
 }
 
 void siram(int value) {
