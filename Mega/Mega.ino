@@ -45,7 +45,7 @@ struct Tanaman {
 } Tanaman1, Tanaman2, Tanaman3, Tanaman4, Tanaman5, Tanaman6, Tanaman7, Tanaman8;
 
 const char* nTanaman[] = {
-  "Kangkung", "Selada", "Pak Coy", "Bayam", "Sawi Pagoda", "kailan", "Sawi", "Daun Bawang", "Daun Mint","Seledri"
+  "Kangkung", "Selada", "Pak Coy", "Bayam", "Sawi Pagoda", "kailan", "Sawi", "Daun Bawang", "Daun Mint", "Seledri"
 };
 const char* nHari[] = {
   "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"
@@ -59,6 +59,10 @@ bool AirBaku = false;
 bool AirNutrisi = false;
 int Pump = 0;
 bool RunningState = false;
+
+void Setting_EEPROM() {
+
+}
 
 void INISIALISASI() {
 
@@ -127,9 +131,15 @@ const int OFF = HIGH;
 
 void setup() {
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   rtc.begin();
   INISIALISASI();
+
+  if (! rtc.begin()) {
+    Serial.println("RTC Not Found");
+    Serial.flush();
+    abort();
+  }
 
   pinMode(PumpWater, OUTPUT);
   pinMode(PumpFert, OUTPUT);
@@ -151,32 +161,13 @@ void setup() {
   digitalWrite(PumpWater, OFF);
   digitalWrite(PumpFert, OFF);
 
-  rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
-
 }
 
 void loop() {
-  // trialGUI();
-  // trialFlow();
-  // testRelay();
-  // trialSwitch();
-  // trialXYZ();
-  // Running();
-  Trial();
+  trialGUI();
+  // kalibrasiSteper()
 }
 
-void Trial(){
-  int Tanaman = 9; 
-  int TanggalTanam = 13;
-  int BulanTanam = 4; 
-  int TahunTanam = 2022;
-  
-  Serial.print(nTanaman[Tanaman]);
-  Serial.print('\t');
-  Serial.print(HitungUmur(TanggalTanam, BulanTanam, TahunTanam));
-  Serial.print('\t');
-  Serial.println(Takaran(Tanaman, HitungUmur(TanggalTanam, BulanTanam, TahunTanam)));
-}
 
 int Takaran(int JenisTanaman, int Umur) {
   int Takar = 0;
@@ -353,278 +344,10 @@ void excution() {
 }
 
 
-
-void trialXYZ() {
-  if (Serial.available() > 0) {
-    dataTerima = Serial.readStringUntil('\n');
-    if (dataTerima == "home") {
-      homie();
-    } else {
-      int x = dataTerima.indexOf("X");
-      int y = dataTerima.indexOf("Y");
-      int z = dataTerima.indexOf("Z");
-      int c = dataTerima.indexOf(";");
-      String sLangkah = dataTerima.substring(1, c);
-      long langkah = sLangkah.toInt();
-
-      if (x > -1) {
-        gotoX(langkah);
-      }
-      if (y > -1) {
-        gotoY(langkah);
-      }
-      if (z > -1) {
-        gotoZ(langkah);
-      }
-    }
-  }
-}
-
 void Reset() {
   FlowA.Count = 0;
 }
 
-
-
-
-void eksekusiOK2() {
-
-  // Preparation
-  Serial.println("Preparation");
-  homie();
-  delay(500);
-  siram(100);
-
-  // Tanaman 1A
-  Serial.println("Tanaman 1A");
-  gotoY(50);
-  delay(500);
-  gotoX(50);
-  delay(500);
-  siram(100);
-
-  // Tanaman 2A
-  Serial.println("Tanaman 2A");
-  gotoX(160);
-  delay(500);
-  siram(100);
-
-  // Tanaman 3A
-  Serial.println("Tanaman 3A");
-
-  gotoX(160);
-  delay(500);
-  siram(100);
-
-  // Tanaman 4A
-  Serial.println("Tanaman 4A");
-  gotoX(160);
-  delay(500);
-  siram(100);
-
-  // Tanaman 1B
-  Serial.println("Tanaman 1B");
-  gotoY(140);
-  delay(500);
-  siram(100);
-
-  // Tanaman 2B
-  Serial.println("Tanaman 2B");
-  gotoX(-160);
-  delay(500);
-  siram(100);
-
-
-  // Tanaman 3B
-  Serial.println("Tanaman 3B");
-  gotoX(-160);
-  delay(500);
-  siram(100);
-
-  // Tanaman 4B
-  Serial.println("Tanaman 4B");
-  gotoX(-160);
-  delay(500);
-  siram(100);
-
-  Serial.println("HOME");
-  homie();
-}
-
-
-void homie() {
-  Serial.println("home: X");
-  digitalWrite(DirX, HIGH);
-  digitalRead(SwitchX);
-  do {
-    digitalWrite(PulseX, HIGH);
-    delayMicroseconds(200); //Set Value
-    digitalWrite(PulseX, LOW);
-    delayMicroseconds(200); //Set Value
-  } while (digitalRead(SwitchX) == HIGH);
-
-  Serial.println("home: Y");
-  digitalWrite(DirY, HIGH);
-  digitalRead(SwitchY);
-  do {
-    digitalWrite(PulseY, HIGH);
-    delayMicroseconds(200); //Set Value
-    digitalWrite(PulseY, LOW);
-    delayMicroseconds(200); //Set Value
-  } while (digitalRead(SwitchY) == HIGH);
-
-  //  Serial.println("home: Z");
-  //  digitalWrite(DirZ, HIGH);
-  //  digitalRead(SwitchZ);
-
-  //  do {
-  //    digitalWrite(PulseZ, HIGH);
-  //    delayMicroseconds(200); //Set Value
-  //    digitalWrite(PulseZ, LOW);
-  //    delayMicroseconds(200); //Set Value
-  //  } while (digitalRead(SwitchZ) == HIGH);
-}
-
-
-void gotoX(long eX) {
-  Serial.print("Xe--> "); Serial.println(eX);
-  eX *= nMM;
-
-  if (eX < 0) {
-    digitalWrite(DirX, HIGH);
-    eX *= -1;
-  } else
-  {
-    digitalWrite(DirX, LOW);
-  }
-  for (long i = 0; i <= eX; i++) {
-    digitalWrite(PulseX, HIGH);
-    delayMicroseconds(speedDelay); //Set Value
-    digitalWrite(PulseX, LOW);
-    delayMicroseconds(speedDelay); //Set Value
-  }
-}
-
-void gotoY(long Ye) {
-  Serial.print("Y --> "); Serial.println(Ye);
-  Ye *= nMM;
-
-  if (Ye < 0) {
-    digitalWrite(DirY, HIGH);
-    Ye *= -1;
-  } else
-  {
-    digitalWrite(DirY, LOW);
-  }
-  for (long i = 0; i <= Ye; i++) {
-    digitalWrite(PulseY, HIGH);
-    delayMicroseconds(speedDelay); //Set Value
-    digitalWrite(PulseY, LOW);
-    delayMicroseconds(speedDelay); //Set Value
-  }
-}
-
-void gotoZ(long Ze) {
-  Serial.print("Z --> "); Serial.println(Ze);
-  Ze *= nMM;
-
-  if (Ze < 0) {
-    digitalWrite(DirZ, HIGH);
-    Ze *= -1;
-  } else
-  {
-    digitalWrite(DirZ, LOW);
-  }
-  for (long i = 0; i <= Ze; i++) {
-    //previousMicros = currentMicros;
-    digitalWrite(PulseZ, HIGH);
-    delayMicroseconds(speedDelay); //Set Value
-    digitalWrite(PulseZ, LOW);
-    delayMicroseconds(speedDelay); //Set Value
-  }
-}
-
-void kalibrasiFlow() {
-  if (Serial.available()) {
-    dataTrial = Serial.readStringUntil('\n');
-    if (dataTrial == "100") {
-      limit = 1300;
-      digitalWrite(PumpFert, ON);
-    } else if (dataTrial == "200") {
-      limit = 2300;
-      digitalWrite(PumpFert, ON);
-    } else if (dataTrial == "300") {
-      limit = 3300;
-      digitalWrite(PumpFert, ON);
-    } else if (dataTrial == "400") {
-      limit = 4100;
-      digitalWrite(PumpFert, ON);
-    } else if (dataTrial == "500") {
-      limit = 5000;
-      digitalWrite(PumpFert, ON);
-    }
-
-
-    else if (dataTrial == "b") {
-      digitalWrite(PumpFert, OFF);
-    } else {
-      FlowA.Count = 0;
-    }
-
-  }
-
-  if ( FlowA.Count >= limit) {
-    digitalWrite(PumpFert, OFF);
-    dataTrial = "b";
-  }
-
-  Serial.println(FlowA.Count);
-}
-
-void trialFlow() {
-  Serial.println(FlowA.Count);
-}
-
-void trialGUI() {
-  for (int i = 1; i <= 10; i++) {
-    Serial.println("A" + String(i) + "B32C80D5832E70F");
-    delay(2000);
-  }
-}
-
-void trialSwitch() {
-  Serial.print("Z: ");
-  Serial.print(digitalRead(SwitchZ));
-  Serial.print('\t');
-  Serial.print("X: ");
-  Serial.print(digitalRead(SwitchX));
-  Serial.print('\t');
-  Serial.print("Y: ");
-  Serial.print(digitalRead(SwitchY));
-  Serial.println('\t');
-}
-
-void testRelay() {
-  String data = "";
-
-  if (Serial.available()) {
-    data = Serial.readStringUntil('\n');
-  }
-
-  if (data == "a") {
-    Serial.println("PumpWater");
-    digitalWrite(PumpWater, ON);
-  } if (data == "b") {
-    Serial.println("PumpFert");
-    digitalWrite(PumpFert, ON);
-  } if (data == "c") {
-    Serial.println("OFF");
-    digitalWrite(PumpWater, OFF);
-    digitalWrite(PumpFert, OFF);
-  }
-
-  Serial.println(FlowA.Count);
-}
 
 void pulseCounterA() {
   FlowA.Count++;
