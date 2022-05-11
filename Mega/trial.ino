@@ -1,7 +1,7 @@
 
 void trialGUI() {
-  String temp = String(Temp());
-  String humid = String(Humid());
+  String temp = String(SHT("Temp"));
+  String humid = String(SHT("Hum"));
   String lumen = String(Lumen());
   String moisture = String(Moisture());
   for (int i = 1; i <= 10; i++) {
@@ -106,4 +106,22 @@ void trialRelay() {
   }
 
   Serial.println(FlowA.Count);
+}
+
+void trialSensor(){
+  Serial.print("Temp: ");
+  Serial.print(SHT("Temp"));
+  Serial.print("\t");
+  
+  Serial.print("Humidity: ");
+  Serial.print(SHT("Hum"));
+  Serial.print("\t");
+  
+  Serial.print("Lux: ");
+  Serial.print(Lumen());
+  Serial.print("\t");
+  
+  Serial.print("Soil: ");
+  Serial.println(Moisture());
+  
 }

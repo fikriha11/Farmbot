@@ -3,8 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from gtexttospeech import TextToSpeech
 import tkinter.font
-import urllib.request
-import urllib.parse
+import requests
 import os
 import cv2
 
@@ -12,7 +11,7 @@ serialPort = "/dev/ttyUSB0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 
-cap = cv2.VideoCapture(2)
+camPort = 2
 
 def gtts():
     TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
@@ -219,33 +218,35 @@ def readSerial():
     root.update
 
 def captureImage():
+    cap = cv2.VideoCapture(camPort)
     result, image = cap.read()
     if result:
         cv2.imwrite("images.jpg", image)
+        cap.release()
     else:
         print("No image detected. Please! try again")   
 
 def UpdateDatabase():
-    # url = "https://aklimatisasidisperta.belajarobot.com/sensor/insert"
-    url = " http://farmbot.belajarobot.com/sensor/1"
-    captureImage()
-    cap.release()
-    files = urllib.parse.urlencode({
-        'moist' : p_kelembapan_tanah,
-        'lumen': p_intensitas,
-        'temp': p_suhu,
-        'humid':p_kelembapan,
-        'image':'',
-    }).encode('ascii')
-
-    try:
-        send_image = urllib.request.urlopen(url,data=files)
-        print(send_image.read())
-    except Exception as error:
-        print(error)
-    root.after(20000, UpdateDatabase)
-
-
+  captureImage()
+  headers = {
+    'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
+}
+  url = 'http://farmbot.belajarobot.com/sensor/1'
+  name_img = 'images.jpg'
+  img = open(name_img, 'rb')
+  data = {
+    'moist': p_kelembapan_tanah,
+    'lumen': p_intensitas,
+    'temp': p_suhu,
+    'humid': p_kelembapan,
+  }
+  files = {'image': (name_img,img,'images/png')}
+  try:
+    res = requests.post(url, data=data, files=files, headers=headers)
+    print(res.text)
+  except Exception as error:
+    print(error)
+  root.after(20000, UpdateDatabase)
 
 showframe(frame1)
 root.after(60000,gtts) # 1 minute

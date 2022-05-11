@@ -1,5 +1,6 @@
 void setup() {
 
+  Wire.begin();
   Serial.begin(9600);
   rtc.begin();
   INISIALISASI();
@@ -9,6 +10,7 @@ void setup() {
     Serial.flush();
     abort();
   }
+  configTSL();
 
   pinMode(PumpWater, OUTPUT);
   pinMode(PumpFert, OUTPUT);
@@ -33,6 +35,7 @@ void setup() {
 }
 
 void loop() {
+  // trialSensor();
   trialGUI();
   // kalibrasiSteper();
 }

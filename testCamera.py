@@ -1,7 +1,7 @@
 
 import cv2
 
-cap = cv2.VideoCapture(3)
+cap = cv2.VideoCapture(2)
 
 def cameraVideo():
     while True:
