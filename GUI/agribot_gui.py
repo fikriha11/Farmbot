@@ -12,7 +12,7 @@ serialPort = "/dev/ttyUSB0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 
-cap = cv2.VideoCapture(3)
+cap = cv2.VideoCapture(2)
 
 def gtts():
     TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
@@ -226,7 +226,8 @@ def captureImage():
         print("No image detected. Please! try again")   
 
 def UpdateDatabase():
-    url = "https://aklimatisasidisperta.belajarobot.com/sensor/insert"
+    # url = "https://aklimatisasidisperta.belajarobot.com/sensor/insert"
+    url = " http://farmbot.belajarobot.com/sensor/1"
     captureImage()
     cap.release()
     files = urllib.parse.urlencode({
@@ -234,7 +235,7 @@ def UpdateDatabase():
         'lumen': p_intensitas,
         'temp': p_suhu,
         'humid':p_kelembapan,
-        'image':('images.jpg',open('images.jpg', 'rb'),'image/jpg'),
+        'image':'',
     }).encode('ascii')
 
     try:
@@ -242,13 +243,12 @@ def UpdateDatabase():
         print(send_image.read())
     except Exception as error:
         print(error)
-        print("post image bermasalah!")
-    root.after(180000, UpdateDatabase)
+    root.after(20000, UpdateDatabase)
 
 
 
 showframe(frame1)
 root.after(60000,gtts) # 1 minute
 root.after(200, readSerial)
-root.after(180000, UpdateDatabase) # 3 minute
+root.after(20000, UpdateDatabase) # 3 minute
 root.mainloop()

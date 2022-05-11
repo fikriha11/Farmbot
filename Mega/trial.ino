@@ -1,4 +1,15 @@
 
+void trialGUI() {
+  String temp = String(Temp());
+  String humid = String(Humid());
+  String lumen = String(Lumen());
+  String moisture = String(Moisture());
+  for (int i = 1; i <= 10; i++) {
+    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
+    delay(2000);
+  }
+}
+
 void trialXYZ() {
   if (Serial.available() > 0) {
     dataTerima = Serial.readStringUntil('\n');
@@ -61,13 +72,6 @@ void trialRTC () {
 
 void trialFlow() {
   Serial.println(FlowA.Count);
-}
-
-void trialGUI() {
-  for (int i = 1; i <= 10; i++) {
-    Serial.println("A" + String(i) + "B32C80D5832E70F");
-    delay(2000);
-  }
 }
 
 void trialSwitch() {
