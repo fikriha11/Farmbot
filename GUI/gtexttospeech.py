@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 from gtts import gTTS
-
+import time
+import os
 
 def TextToSpeech(cTemp, lux, humidity, moisture):
     try:
@@ -19,9 +20,8 @@ def TextToSpeech(cTemp, lux, humidity, moisture):
     
         output = gTTS(text=phrase + phrase1, lang=language, slow=False)
         output.save("GUI/temp.mp3")
-        print("GTTS Sukses")
-
+        time.sleep(0.4)
+        os.system("mpg123 GUI/temp.mp3")
         return True
-    except Exception as error:
+    except:
         print("SoundOutput Error")
-

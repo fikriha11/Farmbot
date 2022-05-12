@@ -4,21 +4,16 @@ from tkinter import ttk
 from gtexttospeech import TextToSpeech
 import tkinter.font
 import requests
-import os
 import cv2
 
 serialPort = "/dev/ttyUSB0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 
-camPort = 2
-
-def gtts():
-    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
-    root.after(60000,gtts)
+camPort = 0
 
 def playsound(event):
-    os.system("mpg123 GUI/temp.mp3")
+    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
     print("Clicked at : ", event.x, event.y)
 
 def showframe(frame):
@@ -240,8 +235,8 @@ def UpdateDatabase():
     'temp': p_suhu,
     'humid': p_kelembapan,
   }
-  files = {'image':img}
-  # files = {'image': (name_img,img,'images/png')}
+  # files = {'image':img}
+  files = {'image': (name_img,img,'images/png')}
   try:
     res = requests.post(url, data=data, files=files, headers=headers)
     print(res.text)
@@ -250,7 +245,6 @@ def UpdateDatabase():
   root.after(20000, UpdateDatabase)
 
 showframe(frame1)
-root.after(60000,gtts) # 1 minute
 root.after(200, readSerial)
 root.after(20000, UpdateDatabase) # 3 minute
 root.mainloop()
