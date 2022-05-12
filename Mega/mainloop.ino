@@ -38,4 +38,6 @@ void loop() {
   // trialSensor();
   trialGUI();
   // kalibrasiSteper();
+  // trialRelay();
+  // siram(3000);
 }

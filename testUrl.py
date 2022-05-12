@@ -14,7 +14,8 @@ def InsertSensor():
     'temp': 102,
     'humid': 103
   }
-  files = {'image': (name_img,img,'images/png')}
+  files = {'image':img}
+  # files = {'image': (name_img,img,'images/png')}
   try:
     res = requests.post(url, data=data, files=files, headers=headers)
     print(res.text)

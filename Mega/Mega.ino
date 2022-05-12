@@ -40,7 +40,7 @@ String dataTrial;
 int limit;
 int Count = 0;
 long nMM = 150;
-int speedDelay = 300;
+int speedDelay = 200;
 
 /** RTC **/
 
@@ -112,11 +112,11 @@ int HitungUmur(int Tanggal, int Bulan, int Tahun) {
 void siram(int value) {
   FlowA.Count = 0;
   while (true) {
-    if (FlowA.Count <= 200 ) {
-      digitalWrite(Pump, ON);
+    if (FlowA.Count <= 200 and value != 0 ) {
+      digitalWrite(PumpWater, ON);
     } else {
       delay(500);
-      digitalWrite(Pump, OFF);
+      digitalWrite(PumpWater, OFF);
       break;
     }
     Serial.println(FlowA.Count);
