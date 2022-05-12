@@ -10,7 +10,7 @@ serialPort = "/dev/ttyUSB0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 
-camPort = 0
+camPort = 2
 
 def playsound(event):
     TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
@@ -216,7 +216,7 @@ def captureImage():
     cap = cv2.VideoCapture(camPort)
     result, image = cap.read()
     if result:
-        cv2.imwrite("images.jpg", image)
+        cv2.imwrite("picture.jpg", image)
         cap.release()
     else:
         print("No image detected. Please! try again")   
@@ -227,7 +227,7 @@ def UpdateDatabase():
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
 }
   url = 'http://farmbot.belajarobot.com/sensor/1'
-  name_img = 'images.jpg'
+  name_img = 'picture.jpg'
   img = open(name_img, 'rb')
   data = {
     'moist': p_kelembapan_tanah,
@@ -246,5 +246,5 @@ def UpdateDatabase():
 
 showframe(frame1)
 root.after(200, readSerial)
-root.after(20000, UpdateDatabase) # 3 minute
+root.after(20000, UpdateDatabase)
 root.mainloop()
