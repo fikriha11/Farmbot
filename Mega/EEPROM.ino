@@ -61,5 +61,75 @@ void INISIALISASI() {
 }
 
 void Setting_EEPROM() {
+  
+/* TANAMAN 1 */
+EEPROM.write(Tanaman1.Usia, 1);
+EEPROM.write(Tanaman1.JenisTanaman, 1);
+EEPROM.write(Tanaman1.Tanggal, 18);
+EEPROM.write(Tanaman1.Bulan, 5);
+EEPROM.write(Tanaman1.Tahun, 2022);
+EEPROM.write(Tanaman1.Panen, 5);
+
+/* TANAMAN 2 */
+EEPROM.write(Tanaman2.Usia, 1);
+EEPROM.write(Tanaman2.JenisTanaman, 1);
+EEPROM.write(Tanaman2.Tanggal, 18);
+EEPROM.write(Tanaman2.Bulan, 5);
+EEPROM.write(Tanaman2.Tahun, 2022);
+EEPROM.write(Tanaman2.Panen, 5);
+
+/* TANAMAN 3 */
+EEPROM.write(Tanaman3.Usia, 1);
+EEPROM.write(Tanaman3.JenisTanaman, 1);
+EEPROM.write(Tanaman3.Tanggal, 18);
+EEPROM.write(Tanaman3.Bulan, 5);
+EEPROM.write(Tanaman3.Tahun, 2022);
+EEPROM.write(Tanaman3.Panen, 5);
+
+/* TANAMAN 4 */
+EEPROM.write(Tanaman4.Usia, 1);
+EEPROM.write(Tanaman4.JenisTanaman, 1);
+EEPROM.write(Tanaman4.Tanggal, 18);
+EEPROM.write(Tanaman4.Bulan, 5);
+EEPROM.write(Tanaman4.Tahun, 2022);
+EEPROM.write(Tanaman4.Panen, 5);
+
+/* TANAMAN 5 */
+EEPROM.write(Tanaman5.Usia, 1);
+EEPROM.write(Tanaman5.JenisTanaman, 1);
+EEPROM.write(Tanaman5.Tanggal, 18);
+EEPROM.write(Tanaman5.Bulan, 5);
+EEPROM.write(Tanaman5.Tahun, 2022);
+EEPROM.write(Tanaman5.Panen, 5);
+
+/* TANAMAN 6 */
+EEPROM.write(Tanaman6.Usia, 1);
+EEPROM.write(Tanaman6.JenisTanaman, 1);
+EEPROM.write(Tanaman6.Tanggal, 18);
+EEPROM.write(Tanaman6.Bulan, 5);
+EEPROM.write(Tanaman6.Tahun, 2022);
+EEPROM.write(Tanaman6.Panen, 5);
+
+/* TANAMAN 7 */
+EEPROM.write(Tanaman7.Usia, 1);
+EEPROM.write(Tanaman7.JenisTanaman, 1);
+EEPROM.write(Tanaman7.Tanggal, 18);
+EEPROM.write(Tanaman7.Bulan, 5);
+EEPROM.write(Tanaman7.Tahun, 2022);
+EEPROM.write(Tanaman7.Panen, 5);
+
+/* TANAMAN 8 */
+EEPROM.write(Tanaman8.Usia, 1);
+EEPROM.write(Tanaman8.JenisTanaman, 1);
+EEPROM.write(Tanaman8.Tanggal, 18);
+EEPROM.write(Tanaman8.Bulan, 5);
+EEPROM.write(Tanaman8.Tahun, 2022);
+EEPROM.write(Tanaman8.Panen, 5);
+
+
+
+
+
+
 
 }

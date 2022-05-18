@@ -1,6 +1,8 @@
 #include <EEPROM.h>
 #include "RTClib.h"
+#include <SimpleTimer.h>
 RTC_DS3231 rtc;
+SimpleTimer timer;
 
 #define PumpWater 32
 #define PumpFert 34
@@ -170,13 +172,13 @@ void mainloop() {
   }
 
   if (RunningState) {
-    excution();
+    execution();
   } else {
     Serial.println("STAND BY");
   }
 }
 
-void excution() {
+void execution() {
   switch (Count) {
     case 0:
       Serial.println("Preparation");
