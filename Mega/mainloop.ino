@@ -5,11 +5,14 @@ void setup() {
   rtc.begin();
   INISIALISASI();
 
-  if (! rtc.begin()) {
-    Serial.println("RTC Not Found");
-    Serial.flush();
-    abort();
-  }
+  /*
+    if (! rtc.begin()) {
+      Serial.println("RTC Not Found");
+      Serial.flush();
+      abort();
+    }
+  */
+
   configTSL();
 
   pinMode(PumpWater, OUTPUT);
@@ -33,21 +36,20 @@ void setup() {
   digitalWrite(PumpFert, OFF);
 
   /* SET RTC */
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  //  rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+  // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 
   /* SCHEDULE */
-  timer.setInterval(5000, trialGUI);
+  timer.setInterval(3000, updateSensor);
+
 }
+
 
 void loop() {
   timer.run();
   mainloop();
-
-
-  // trialSensor();
-  // trialGUI();
-  // kalibrasiSteper();
+  // execution();
+  // trialXYZ();
   // trialRelay();
-  // siram(3000);
+  // trialRTC ();
 }

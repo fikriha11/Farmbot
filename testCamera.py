@@ -2,6 +2,7 @@
 import cv2
 
 cap = cv2.VideoCapture(0)
+cap.set(400,150)
 
 def cameraVideo():
     while True:

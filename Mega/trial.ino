@@ -4,10 +4,11 @@ void trialGUI() {
   String humid = String(SHT("Hum"));
   String lumen = String(Lumen());
   String moisture = String(Moisture());
-  for (int i = 1; i <= 10; i++) {
-    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
-    delay(2000);
-  }
+  //  for (int i = 1; i <= 10; i++) {
+  //    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
+  //    delay(2000);
+  //  }
+  Serial.println("A" + String(1) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
 }
 
 void trialXYZ() {
@@ -65,7 +66,6 @@ void trialRTC () {
   Serial.println(String() + jam + ":" + menit + ":" + detik);
   Serial.println(String() + "Suhu: " + suhu + " C");
   Serial.println();
-
   delay(1000);
 }
 
@@ -108,20 +108,20 @@ void trialRelay() {
   Serial.println(FlowA.Count);
 }
 
-void trialSensor(){
+void trialSensor() {
   Serial.print("Temp: ");
   Serial.print(SHT("Temp"));
   Serial.print("\t");
-  
+
   Serial.print("Humidity: ");
   Serial.print(SHT("Hum"));
   Serial.print("\t");
-  
+
   Serial.print("Lux: ");
   Serial.print(Lumen());
   Serial.print("\t");
-  
+
   Serial.print("Soil: ");
   Serial.println(Moisture());
-  
+
 }

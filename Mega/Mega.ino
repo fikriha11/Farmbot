@@ -45,7 +45,6 @@ long nMM = 150;
 int speedDelay = 200;
 
 /** RTC **/
-
 int tNow = 0; // Tanggal
 int bNow = 0; // Bulan
 int yNow = 0; // Tahun
@@ -67,23 +66,22 @@ bool RunningState = false;
 const int ON = LOW;
 const int OFF = HIGH;
 
-
 int Takaran(int JenisTanaman, int Umur) {
   int Takar = 0;
   if (JenisTanaman >= 1 && JenisTanaman < 9 ) {
     if (Umur < 1) {
-      Takar = 75;
+      Takar = 1000; // 75 ml
     } else if (Umur >= 1 && Umur <= 5) {
-      Takar = 100;
+      Takar = 1300; // 100 ml
     } else {
-      Takar = 150;
+      Takar = 1800; // 150 ml
     }
   }
   else {
     if (Umur < 1) {
-      Takar = 75;
+      Takar = 1000;  // 75 ml
     } else {
-      Takar = 100;
+      Takar = 1300; // 100 ml
     }
   }
   return Takar;
@@ -91,18 +89,15 @@ int Takaran(int JenisTanaman, int Umur) {
 
 
 int HitungUmur(int Tanggal, int Bulan, int Tahun) {
+
   DateTime now = rtc.now();
-  int Tanam = Tanggal + (Bulan * 30 ) + (Tahun * 365);  // Total tanggal Tanam
+  int Tanam = Tanggal + (Bulan * 30 ) + (2022 * 365);  // Total tanggal Tanam
 
   tNow = now.day(), DEC; // Tanggal Sekarang
   bNow =  now.month(), DEC; // Bulan Sekarang
   yNow = now.year(), DEC; // Tahun Sekarang
 
-  tNow = 21; // Tanggal Sekarang
-  bNow = 4; // Bulan Sekarang
-  yNow = 2022; // Tahun Sekarang
-
-  int Now = tNow + (bNow * 30) + (yNow * 365);  // Total
+  int Now = tNow + (bNow * 30) + ((yNow) * 365); // Total
 
   float cTahun = (Now - Tanam) / 365.0;
   float cBulan = cTahun * 12.0;
@@ -114,14 +109,14 @@ int HitungUmur(int Tanggal, int Bulan, int Tahun) {
 void siram(int value) {
   FlowA.Count = 0;
   while (true) {
-    if (FlowA.Count <= 200 and value != 0 ) {
-      digitalWrite(PumpWater, ON);
+    Serial2.println(FlowA.Count);
+    if (FlowA.Count <= value and value != 0 ) {
+      digitalWrite(Pump, ON);
     } else {
       delay(500);
-      digitalWrite(PumpWater, OFF);
+      digitalWrite(Pump, OFF);
       break;
     }
-    Serial.println(FlowA.Count);
   }
   Count++;  // Pindah Step
 }
@@ -154,39 +149,51 @@ bool CheckJam() {
   if (hNow == 7 and mNow == 0 ) {
     Pump = PumpFert;
     return true;
-  } else if (hNow == 15 and mNow == 0 ) {
-    Pump = PumpWater;
+  } else if (hNow == 16 and mNow == 0) {
+    Pump = PumpFert;
+    // Pump = PumpWater;
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
+
 
 
 void mainloop() {
   // Check
   if (CheckJam()) {
     RunningState = true;
-  } else {
-    RunningState = false;
   }
 
   if (RunningState) {
     execution();
-  } else {
-    Serial.println("STAND BY");
+  }
+}
+
+void updateSensor() {
+  if (!RunningState) {
+    String temp = String(SHT("Temp"));
+    String humid = String(SHT("Hum"));
+    String lumen = String(Lumen());
+    String moisture = String(Moisture());
+    //  for (int i = 1; i <= 10; i++) {
+    //    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
+    //    delay(2000);
+    //  }
+    Serial.println("A" + String(1) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
   }
 }
 
 void execution() {
   switch (Count) {
     case 0:
-      Serial.println("Preparation");
+      // Serial.println("Preparation");
       homie();
       delay(500);
+      siram(0);
       break;
     case 1 :
-      Serial.println("Tanaman 1A");
+      // Serial.println("Tanaman 1A");
       gotoY(50);
       delay(500);
       gotoX(50);
@@ -194,50 +201,53 @@ void execution() {
       Running(EEPROM.read(Tanaman1.JenisTanaman), HitungUmur(EEPROM.read(Tanaman1.Tanggal), EEPROM.read(Tanaman1.Bulan), EEPROM.read(Tanaman1.Tahun)), EEPROM.read(Tanaman1.Panen));
       break;
     case 2 :
-      Serial.println("Tanaman 2A");
+      // Serial.println("Tanaman 2A");
       gotoX(160);
       delay(500);
       Running(EEPROM.read(Tanaman2.JenisTanaman), HitungUmur(EEPROM.read(Tanaman2.Tanggal), EEPROM.read(Tanaman2.Bulan), EEPROM.read(Tanaman2.Tahun)), EEPROM.read(Tanaman2.Panen));
       break;
     case 3 :
-      Serial.println("Tanaman 3A");
+      // Serial.println("Tanaman 3A");
       gotoX(160);
       delay(500);
       Running(EEPROM.read(Tanaman3.JenisTanaman), HitungUmur(EEPROM.read(Tanaman3.Tanggal), EEPROM.read(Tanaman3.Bulan), EEPROM.read(Tanaman3.Tahun)), EEPROM.read(Tanaman3.Panen));
       break;
     case 4 :
-      Serial.println("Tanaman 4A");
-      gotoX(160);
+      // Serial.println("Tanaman 4A");
+      gotoX(190);
       delay(500);
       Running(EEPROM.read(Tanaman4.JenisTanaman), HitungUmur(EEPROM.read(Tanaman4.Tanggal), EEPROM.read(Tanaman4.Bulan), EEPROM.read(Tanaman4.Tahun)), EEPROM.read(Tanaman4.Panen));
       break;
+
     case 5 :
-      Serial.println("Tanaman 1B");
-      gotoY(140);
+      // Serial.println("Tanaman 1B");
+      gotoY(190);
       delay(500);
       Running(EEPROM.read(Tanaman5.JenisTanaman), HitungUmur(EEPROM.read(Tanaman5.Tanggal), EEPROM.read(Tanaman5.Bulan), EEPROM.read(Tanaman5.Tahun)), EEPROM.read(Tanaman5.Panen));
       break;
     case 6 :
-      Serial.println("Tanaman 2B");
-      gotoX(-160);
+      // Serial.println("Tanaman 2B");
+      gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman6.JenisTanaman), HitungUmur(EEPROM.read(Tanaman6.Tanggal), EEPROM.read(Tanaman6.Bulan), EEPROM.read(Tanaman6.Tahun)), EEPROM.read(Tanaman6.Panen));
       break;
     case 7 :
-      Serial.println("Tanaman 3B");
-      gotoX(-160);
+      // Serial.println("Tanaman 3B");
+      gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman7.JenisTanaman), HitungUmur(EEPROM.read(Tanaman7.Tanggal), EEPROM.read(Tanaman7.Bulan), EEPROM.read(Tanaman7.Tahun)), EEPROM.read(Tanaman7.Panen));
       break;
     case 8 :
-      Serial.println("Tanaman 4B");
-      gotoX(-160);
+      // Serial.println("Tanaman 4B");
+      gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman8.JenisTanaman), HitungUmur(EEPROM.read(Tanaman8.Tanggal), EEPROM.read(Tanaman8.Bulan), EEPROM.read(Tanaman8.Tahun)), EEPROM.read(Tanaman8.Panen));
       break;
     case 9:
       homie();
-      Count = 10;
+      Count = 0;
+      // Serial.println("SELESAI");
+      RunningState = false;
       break;
   }
 }
