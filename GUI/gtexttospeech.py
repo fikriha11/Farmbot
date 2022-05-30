@@ -3,6 +3,9 @@ from gtts import gTTS
 import time
 import os
 
+# path = '/home/pi/Documents/Farmbot/'
+path = ''
+
 def TextToSpeech(cTemp, lux, humidity, moisture):
     try:
         if dt.now().hour > 5 and dt.now().hour <= 10:
@@ -19,9 +22,9 @@ def TextToSpeech(cTemp, lux, humidity, moisture):
         language = 'id'
     
         output = gTTS(text=phrase + phrase1, lang=language, slow=False)
-        output.save("/home/pi/Documents/Farmbot/GUI/temp.mp3")
+        output.save(path + "GUI/temp.mp3")
         time.sleep(0.4)
-        os.system("mpg123 /home/pi/Documents/Farmbot/GUI/temp.mp3")
+        os.system("mpg123 {}GUI/temp.mp3".format(path))
         return True
     except:
         print("SoundOutput Error")

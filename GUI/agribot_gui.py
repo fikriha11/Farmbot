@@ -9,8 +9,10 @@ import cv2
 serialPort = "/dev/ttyACM0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
-
 camPort = 0
+
+# path = '/home/pi/Documents/Farmbot/'
+path = ''
 
 def playsound(event):
     TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
@@ -41,10 +43,10 @@ frame2.grid(row=0, column=0, sticky='nsew')
 
 
 # ========================FRAME 1================================
-bckg = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 1/background2.png")
+bckg = PhotoImage(file=path + "GUI/window 1/background2.png")
 lbl_bg = Label(frame1, image=bckg).pack()
 
-btnext = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 1/next.png")
+btnext = PhotoImage(file=path + "GUI/window 1/next.png")
 lbl_btnext = Button(frame1, image=btnext, background='#FFFFFF',
                     command=lambda: showframe(frame2)).place(x=757, y=197)
 
@@ -59,23 +61,23 @@ l_kelembapan_tanah = Label(frame1, text='', textvariable=kelembapan_tanah,
                            font=changefont, bg='#F2F2F2').place(x=670, y=328)
 
 # dynamic image untuk dirubah dari data serial
-img = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/emoji/1.png")
+img = PhotoImage(file=path + "GUI/emoji/1.png")
 lbl_img = ttk.Label(frame1, image=img, background='#FFFFFF')
 lbl_img.place(x=35, y=115)
 
 
 # ========================FRAME 2================================
-bckg2 = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 2/bg.png")
+bckg2 = PhotoImage(file=path + "GUI/window 2/bg.png")
 lbl_bg2 = Label(frame2, image=bckg2).pack()
 
-btnext2 = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 2/back.png")
+btnext2 = PhotoImage(file=path + "GUI/window 2/back.png")
 lbl_btnext2 = Button(frame2, image=btnext2,
                      background='#FFFFFF', command=lambda: showframe(frame1))
 lbl_btnext2.place(x=43, y=20)
 
 # # source image untuk pot
-planted = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 2/planted.png")
-unplanted = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/window 2/empty.png")
+planted = PhotoImage(file=path + "GUI/window 2/planted.png")
+unplanted = PhotoImage(file=path + "GUI/window 2/empty.png")
 
 # static image. pot baris 1 (p11-p16)
 p11 = Label(frame2, image=unplanted, background='#FFFFFF').place(x=117, y=32)
@@ -198,7 +200,7 @@ def readSerial():
             kelembapan_tanah.set(p_kelembapan_tanah)
 
             # ubah dynamic image
-            img = PhotoImage(file="/home/pi/Documents/Farmbot/GUI/emoji/" + p_status + ".png")
+            img = PhotoImage(file=path + "GUI/emoji/" + p_status + ".png")
 
             lbl_img.configure(image=img)
             lbl_img.image = img
@@ -216,7 +218,7 @@ def captureImage():
     cap = cv2.VideoCapture(camPort)
     result, image = cap.read()
     if result:
-        cv2.imwrite("picture.png", image)
+        cv2.imwrite(path + "picture.png", image)
         cap.release()
     else:
         print("No image detected. Please! try again")   
@@ -227,7 +229,9 @@ def UpdateDatabase():
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
 }
   url = 'http://farmbot.belajarobot.com/sensor/1'
-  name_img = '/home/pi/Documents/Farmbot/image.png'
+  name_img = path + 'image.png'
+  # name_img = path + 'picture.png'
+    
   img = open(name_img, 'rb')
   data = {
     'moist': p_kelembapan_tanah,

@@ -1,7 +1,7 @@
-from inspect import Parameter
-import cv2
-from cv2 import resize
-import requests
+# from inspect import Parameter
+# import cv2
+# from cv2 import resize
+# import requests
 
 headers = {
   'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
@@ -46,8 +46,32 @@ def query():
    req = requests.get(url,headers=headers)
    print(req.json())
 
-query()
+# query()
 # InsertSensor()
 # size()
 
 
+def json():
+  json = {
+    'data':[
+      [
+        {
+          "id" : "9"
+        },
+        {
+          "nama": "10"
+        }
+      ]
+    ]
+  }
+
+  data = json['data']
+  print(data[0][1]['nama'])
+
+def coba():
+  path = '/home/pi/Documents/Farmbot/'
+  print(path + 'Gui/agribot/nano.txt')
+  print("mpg123 {}GUI/agribot.hg".format(path))
+
+
+coba()
