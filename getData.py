@@ -1,4 +1,7 @@
 import requests
+import serial
+from datetime  import datetime
+from time import sleep
 
 headers = {
   'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
@@ -11,12 +14,9 @@ class GetData():
         self.baris = int(baris)
         self.kolom = int(kolom)
 
-        self.plant_id = None
-        self.umur_panen = None       
-        self.tanggal_tanam = None
-        self.tahun_tanam = None
-        self.bulan_tanam = None
-        self.hari_tanam = None
+        self.plant_id = ""
+        self.Umur = ""
+        self.umur_panen = ""   
 
     @property
     def get_database(self):
@@ -27,32 +27,47 @@ class GetData():
     @property
     def get_data(self):
         self.data = self.get_database['data'][self.kolom-1][self.baris - 1]
-        return self.data   
+        return self.data
 
+    @property
+    def get_umur(self):
+        self.tanggal = datetime.now()
+        self.hari_now = self.tanggal.day
+        self.bulan_now = self.tanggal.month
+        self.tahun_now = self.tanggal.year
+
+        self.tanggal_tanam = self.get_data['plant_time']
+        self.tanggal_tanam = self.tanggal_tanam.split('-')        
+        self.tahun_tanam = int(self.tanggal_tanam[0])
+        self.bulan_tanam = int(self.tanggal_tanam[1])
+        self.hari_tanam = int(self.tanggal_tanam[2].split('T')[0])  
+
+        self.Tanam = self.hari_tanam + self.bulan_tanam * 30 + self.tahun_tanam * 365
+        self.Sekarang = self.hari_now + self.bulan_now * 30 + self.tahun_now * 365
+
+        self.Umurtahun = (self.Sekarang - self.Tanam) / 365
+        self.UmurBulan = self.Umurtahun * 12
+        self.UmurMinggu = self.UmurBulan * 4
+        self.UmurHari = self.UmurMinggu * 7
+
+        return round(self.UmurHari)
+
+                
     def save(self):
         if self.get_data != None:
             self.plant_id = self.get_data['plant_id']
-            self.umur_panen = int(self.get_data['period'] / 7)
-            
-            self.tanggal_tanam = self.get_data['plant_time']
-            self.tanggal_tanam = self.tanggal_tanam.split('-')
-            
-            self.tahun_tanam = self.tanggal_tanam[0]
-            self.bulan_tanam = self.tanggal_tanam[1]
-            self.hari_tanam = self.tanggal_tanam[2].split('T')[0]
-                
+            self.Umur = self.get_umur
+            self.umur_panen = self.get_data['period']     
 
     @property
     def data_send(self):
         self.save()
-        return "{},{},{},{},{}".format(
+        return "{},{},{}".format(
             self.plant_id,
             self.umur_panen,
-            self.tahun_tanam,
-            self.bulan_tanam,
-            self.hari_tanam
+            self.Umur,
         )  
-           
+ 
 def DataArduino():
     Tanaman1 = GetData(1,1)
     Tanaman2 = GetData(1,2)
@@ -69,4 +84,7 @@ def DataArduino():
         Tanaman7.data_send,Tanaman8.data_send,
     )
 
-print(DataArduino())
+def TestSerial():
+    arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1)
+    arduino.write(bytes(DataArduino(), 'utf-8'))
+

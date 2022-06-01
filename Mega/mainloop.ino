@@ -46,8 +46,12 @@ void setup() {
 
 
 void loop() {
-  timer.run();
-  mainloop();
+  // ReceiveData();
+  // timer.run();
+  // mainloop();
+
+  TestEEPROM();
+  
   // execution();
   // trialXYZ();
   // trialRelay();

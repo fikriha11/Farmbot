@@ -109,7 +109,7 @@ int HitungUmur(int Tanggal, int Bulan, int Tahun) {
 void siram(int value) {
   FlowA.Count = 0;
   while (true) {
-    Serial2.println(FlowA.Count);
+     Serial2.println(FlowA.Count);
     if (FlowA.Count <= value and value != 0 ) {
       digitalWrite(Pump, ON);
     } else {
