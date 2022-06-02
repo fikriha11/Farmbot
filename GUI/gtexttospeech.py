@@ -3,8 +3,8 @@ from gtts import gTTS
 import time
 import os
 
-# path = '/home/pi/Documents/Farmbot/'
-path = ''
+path = '/home/pi/Documents/Farmbot/'
+# path = ''
 
 def TextToSpeech(cTemp, lux, humidity, moisture):
     try:

@@ -10,10 +10,10 @@ from getData import DataArduino
 serialPort = "/dev/ttyUSB0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
-camPort = 2
+camPort = 0
 
-# path = '/home/pi/Documents/Farmbot/'
-path = ''
+path = '/home/pi/Documents/Farmbot/'
+# path = ''
 
 def playsound(event):
     TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
