@@ -1,7 +1,7 @@
 
 import cv2
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 cap.set(400,150)
 
 def cameraVideo():

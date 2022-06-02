@@ -69,16 +69,16 @@ const int OFF = HIGH;
 int Takaran(int JenisTanaman, int Umur) {
   int Takar = 0;
   if (JenisTanaman >= 1 && JenisTanaman < 9 ) {
-    if (Umur < 1) {
+    if (Umur <= 7) {
       Takar = 1000; // 75 ml
-    } else if (Umur >= 1 && Umur <= 5) {
+    } else if (Umur > 7 && Umur <= 35) {
       Takar = 1300; // 100 ml
     } else {
       Takar = 1800; // 150 ml
     }
   }
   else {
-    if (Umur < 1) {
+    if (Umur <= 7) {
       Takar = 1000;  // 75 ml
     } else {
       Takar = 1300; // 100 ml
@@ -109,7 +109,7 @@ int HitungUmur(int Tanggal, int Bulan, int Tahun) {
 void siram(int value) {
   FlowA.Count = 0;
   while (true) {
-     Serial2.println(FlowA.Count);
+    Serial2.println(FlowA.Count);
     if (FlowA.Count <= value and value != 0 ) {
       digitalWrite(Pump, ON);
     } else {
@@ -198,50 +198,50 @@ void execution() {
       delay(500);
       gotoX(50);
       delay(500);
-      Running(EEPROM.read(Tanaman1.JenisTanaman), HitungUmur(EEPROM.read(Tanaman1.Tanggal), EEPROM.read(Tanaman1.Bulan), EEPROM.read(Tanaman1.Tahun)), EEPROM.read(Tanaman1.Panen));
+      Running(EEPROM.read(Tanaman1.JenisTanaman), EEPROM.read(Tanaman1.Usia), EEPROM.read(Tanaman1.Panen));
       break;
     case 2 :
       // Serial.println("Tanaman 2A");
       gotoX(160);
       delay(500);
-      Running(EEPROM.read(Tanaman2.JenisTanaman), HitungUmur(EEPROM.read(Tanaman2.Tanggal), EEPROM.read(Tanaman2.Bulan), EEPROM.read(Tanaman2.Tahun)), EEPROM.read(Tanaman2.Panen));
+      Running(EEPROM.read(Tanaman2.JenisTanaman), EEPROM.read(Tanaman2.Usia), EEPROM.read(Tanaman2.Panen));
       break;
     case 3 :
       // Serial.println("Tanaman 3A");
       gotoX(160);
       delay(500);
-      Running(EEPROM.read(Tanaman3.JenisTanaman), HitungUmur(EEPROM.read(Tanaman3.Tanggal), EEPROM.read(Tanaman3.Bulan), EEPROM.read(Tanaman3.Tahun)), EEPROM.read(Tanaman3.Panen));
+      Running(EEPROM.read(Tanaman3.JenisTanaman), EEPROM.read(Tanaman3.Usia), EEPROM.read(Tanaman3.Panen));
       break;
     case 4 :
       // Serial.println("Tanaman 4A");
       gotoX(190);
       delay(500);
-      Running(EEPROM.read(Tanaman4.JenisTanaman), HitungUmur(EEPROM.read(Tanaman4.Tanggal), EEPROM.read(Tanaman4.Bulan), EEPROM.read(Tanaman4.Tahun)), EEPROM.read(Tanaman4.Panen));
+      Running(EEPROM.read(Tanaman4.JenisTanaman), EEPROM.read(Tanaman4.Usia), EEPROM.read(Tanaman4.Panen));
       break;
 
     case 5 :
       // Serial.println("Tanaman 1B");
       gotoY(190);
       delay(500);
-      Running(EEPROM.read(Tanaman5.JenisTanaman), HitungUmur(EEPROM.read(Tanaman5.Tanggal), EEPROM.read(Tanaman5.Bulan), EEPROM.read(Tanaman5.Tahun)), EEPROM.read(Tanaman5.Panen));
+      Running(EEPROM.read(Tanaman5.JenisTanaman), EEPROM.read(Tanaman5.Usia), EEPROM.read(Tanaman5.Panen));
       break;
     case 6 :
       // Serial.println("Tanaman 2B");
       gotoX(-170);
       delay(500);
-      Running(EEPROM.read(Tanaman6.JenisTanaman), HitungUmur(EEPROM.read(Tanaman6.Tanggal), EEPROM.read(Tanaman6.Bulan), EEPROM.read(Tanaman6.Tahun)), EEPROM.read(Tanaman6.Panen));
+      Running(EEPROM.read(Tanaman6.JenisTanaman), EEPROM.read(Tanaman6.Usia), EEPROM.read(Tanaman6.Panen));
       break;
     case 7 :
       // Serial.println("Tanaman 3B");
       gotoX(-170);
       delay(500);
-      Running(EEPROM.read(Tanaman7.JenisTanaman), HitungUmur(EEPROM.read(Tanaman7.Tanggal), EEPROM.read(Tanaman7.Bulan), EEPROM.read(Tanaman7.Tahun)), EEPROM.read(Tanaman7.Panen));
+      Running(EEPROM.read(Tanaman7.JenisTanaman), EEPROM.read(Tanaman7.Usia), EEPROM.read(Tanaman7.Panen));
       break;
     case 8 :
       // Serial.println("Tanaman 4B");
       gotoX(-170);
       delay(500);
-      Running(EEPROM.read(Tanaman8.JenisTanaman), HitungUmur(EEPROM.read(Tanaman8.Tanggal), EEPROM.read(Tanaman8.Bulan), EEPROM.read(Tanaman8.Tahun)), EEPROM.read(Tanaman8.Panen));
+      Running(EEPROM.read(Tanaman8.JenisTanaman), EEPROM.read(Tanaman8.Usia), EEPROM.read(Tanaman8.Panen));
       break;
     case 9:
       homie();

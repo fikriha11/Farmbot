@@ -1,5 +1,3 @@
-import cv2
-from cv2 import resize
 import requests
 
 headers = {
@@ -25,4 +23,3 @@ def InsertSensor():
     print(res.text)
   except Exception as error:
     print(error)
-

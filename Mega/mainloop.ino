@@ -46,11 +46,11 @@ void setup() {
 
 
 void loop() {
-  // ReceiveData();
-  // timer.run();
-  // mainloop();
+  ReceiveData();
+  timer.run();
+  mainloop();
 
-  TestEEPROM();
+  // TestEEPROM();
   
   // execution();
   // trialXYZ();
