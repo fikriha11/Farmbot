@@ -139,7 +139,7 @@ void SaveEEPROM() {
   EEPROM.write(Tanaman7.Usia, UmurSekarang);
   EEPROM.write(Tanaman7.Panen, UmurPanen);
 
-  split(dI);
+  split(dH);
   EEPROM.write(Tanaman8.JenisTanaman, Plant_ID);
   EEPROM.write(Tanaman8.Usia, UmurSekarang);
   EEPROM.write(Tanaman8.Panen, UmurPanen);
