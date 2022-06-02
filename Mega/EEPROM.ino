@@ -95,8 +95,8 @@ void split(String Data) {
   UmurPanen = Data.substring(i2 + 1).toInt();
 }
 
-void ReceiveData(){
-  while(Serial.available()){
+void ReceiveData() {
+  while (Serial.available()) {
     receiveData = Serial.readString();
     parse(receiveData);
     SaveEEPROM();
@@ -145,7 +145,20 @@ void SaveEEPROM() {
   EEPROM.write(Tanaman8.Panen, UmurPanen);
 }
 
-void TestEEPROM(){
+void TestEEPROM() {
+  Serial.println("\nTanaman 1");
+  Serial.println(EEPROM.read(Tanaman1.JenisTanaman));
+  Serial.println(EEPROM.read(Tanaman1.Usia));
+  Serial.println(EEPROM.read(Tanaman1.Panen));
+  Serial.println("\nTanaman 4");
+  Serial.println(EEPROM.read(Tanaman4.JenisTanaman));
+  Serial.println(EEPROM.read(Tanaman4.Usia));
+  Serial.println(EEPROM.read(Tanaman4.Panen));
+  Serial.println("\nTanaman 6");
+  Serial.println(EEPROM.read(Tanaman6.JenisTanaman));
+  Serial.println(EEPROM.read(Tanaman6.Usia));
+  Serial.println(EEPROM.read(Tanaman6.Panen));
+  Serial.println("\nTanaman 8");
   Serial.println(EEPROM.read(Tanaman8.JenisTanaman));
   Serial.println(EEPROM.read(Tanaman8.Usia));
   Serial.println(EEPROM.read(Tanaman8.Panen));

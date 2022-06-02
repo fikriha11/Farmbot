@@ -73,10 +73,10 @@ def DataArduino():
     Tanaman2 = GetData(1,2)
     Tanaman3 = GetData(1,3)
     Tanaman4 = GetData(1,4)
-    Tanaman5 = GetData(1,5)
-    Tanaman6 = GetData(2,1)
-    Tanaman7 = GetData(2,2)
-    Tanaman8 = GetData(2,3)
+    Tanaman5 = GetData(2,1)
+    Tanaman6 = GetData(2,2)
+    Tanaman7 = GetData(2,3)
+    Tanaman8 = GetData(2,4)
 
     return "A{}B{}C{}D{}E{}F{}G{}H{}I".format(
         Tanaman1.data_send,Tanaman2.data_send,Tanaman3.data_send,
