@@ -10,6 +10,7 @@ SimpleTimer timer;
 #define SwitchX A2
 #define SwitchY A3
 #define SensorFlowA  3
+#define button 47
 
 /* Stepper */
 #define PulseY 12
@@ -160,9 +161,11 @@ bool CheckJam() {
 
 
 void mainloop() {
-  // Check
   if (CheckJam()) {
     RunningState = true;
+  } if (Button()) {
+    RunningState = true;
+    Pump = PumpFert;
   }
 
   if (RunningState) {

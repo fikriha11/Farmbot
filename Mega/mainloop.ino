@@ -21,6 +21,7 @@ void setup() {
   pinMode(SwitchZ, INPUT_PULLUP);
   pinMode(SwitchX, INPUT_PULLUP);
   pinMode(SwitchY, INPUT_PULLUP);
+  pinMode(button, INPUT_PULLUP);
 
   pinMode(PulseX, OUTPUT);
   pinMode(DirX, OUTPUT);
@@ -40,7 +41,7 @@ void setup() {
   // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 
   /* SCHEDULE */
-  timer.setInterval(3000, updateSensor);
+  timer.setInterval(3000, updateSensor); 
 
 }
 
@@ -50,8 +51,8 @@ void loop() {
   timer.run();
   mainloop();
 
+  // trialSensor();
   // TestEEPROM();
-
   // execution();
   // trialXYZ();
   // trialRelay();
