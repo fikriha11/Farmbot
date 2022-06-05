@@ -10,6 +10,8 @@ from gtexttospeech import TextToSpeech
 from getData import DataArduino
 
 serialPort = "/dev/ttyACM0"
+# serialPort = "/dev/ttyUSB0"
+
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 camPort = 0
@@ -209,7 +211,7 @@ def readSerial():
     root.after(200, readSerial)
 
 def playsound(event):
-    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
+    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah, path)
     print("Clicked at : ", event.x, event.y)
 
 def showframe(frame):
@@ -219,7 +221,6 @@ def SendSerial():
   print('Update')
   ser.write(bytes(DataArduino(),'utf-8'))
   print('Updated')
-  
 
 def captureImage():
     cap = cv2.VideoCapture(camPort)
@@ -254,16 +255,20 @@ def UpdateDatabase():
   
   except Exception as error:
     print(error)
-  root.after(20000, UpdateDatabase) 
 
-def thread():
+def thread_get():
   t1 = Thread(target=SendSerial)
   t1.start()
-  root.after(30000, thread)
+  root.after(30000, thread_get)
+
+def thread_post():
+  t1 = Thread(target=UpdateDatabase)
+  t1.start()
+  root.after(20000, thread_post)
 
 showframe(frame1)
 root.after(200, readSerial)
-root.after(30000, thread)
-root.after(20000, UpdateDatabase)
+root.after(30000, thread_get)
+root.after(20000, thread_post)
 root.mainloop()
 

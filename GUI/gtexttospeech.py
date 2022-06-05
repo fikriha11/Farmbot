@@ -3,10 +3,7 @@ from gtts import gTTS
 import time
 import os
 
-path = '/home/pi/Documents/Farmbot/'
-# path = ''
-
-def TextToSpeech(cTemp, lux, humidity, moisture):
+def TextToSpeech(cTemp, lux, humidity, moisture, path):
     try:
         if dt.now().hour > 5 and dt.now().hour <= 10:
             waktu = "Pagi"
