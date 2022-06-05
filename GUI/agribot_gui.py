@@ -1,26 +1,21 @@
+from time import sleep, time
 import tkinter.font
 import requests
 import cv2
 from serial import Serial
 from tkinter import *
 from tkinter import ttk
+from threading import *
 from gtexttospeech import TextToSpeech
 from getData import DataArduino
 
-serialPort = "/dev/ttyUSB0"
+serialPort = "/dev/ttyACM0"
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 camPort = 0
 
 path = '/home/pi/Documents/Farmbot/'
 # path = ''
-
-def playsound(event):
-    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
-    print("Clicked at : ", event.x, event.y)
-
-def showframe(frame):
-    frame.tkraise()
 
 
 root = Tk()
@@ -210,18 +205,23 @@ def readSerial():
         else:
             serBuffer += c.decode("utf-8")
 
-    lbl_img.bind("<Button-1>", playsound)
+    lbl_img.bind("<Button-1>", playsound)        
+    root.after(200, readSerial)
 
-    root.after(2000, readSerial)
-    root.update
+def playsound(event):
+    TextToSpeech(p_suhu,p_intensitas,p_kelembapan,p_kelembapan_tanah)
+    print("Clicked at : ", event.x, event.y)
+
+def showframe(frame):
+    frame.tkraise()
 
 def SendSerial():
+  print('Update')
   ser.write(bytes(DataArduino(),'utf-8'))
-  root.after(5000, SendSerial)
-  root.update
+  print('Updated')
+  
 
 def captureImage():
-
     cap = cv2.VideoCapture(camPort)
     result, image = cap.read()
 
@@ -235,7 +235,7 @@ def UpdateDatabase():
   captureImage()
   headers = {
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
-}
+  }
   url = 'http://farmbot.belajarobot.com/sensor/1'
   name_img = path + 'picture.png'
     
@@ -251,14 +251,19 @@ def UpdateDatabase():
   try:
     res = requests.post(url, data=data, files=files, headers=headers)
     print(res.text)
+  
   except Exception as error:
     print(error)
+  root.after(20000, UpdateDatabase) 
 
-  root.after(20000, UpdateDatabase)
-  root.update
+def thread():
+  t1 = Thread(target=SendSerial)
+  t1.start()
+  root.after(30000, thread)
 
 showframe(frame1)
-root.after(2000, readSerial)
-root.after(5000, SendSerial)
+root.after(200, readSerial)
+root.after(30000, thread)
 root.after(20000, UpdateDatabase)
 root.mainloop()
+

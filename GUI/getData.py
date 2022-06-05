@@ -64,8 +64,8 @@ class GetData():
         self.save()
         return "{},{},{}".format(
             self.plant_id,
-            self.umur_panen,
             self.Umur,
+            self.umur_panen,
         )  
  
 def DataArduino():
