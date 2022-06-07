@@ -36,11 +36,17 @@ void setup() {
   digitalWrite(DirZ, LOW);
   digitalWrite(PumpWater, OFF);
   digitalWrite(PumpFert, OFF);
+
+
+  digitalWrite(power, ON);
+  homie();
   digitalWrite(power, OFF);
 
   /* SET RTC */
   // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+
+
 
   /* SCHEDULE */
   timer.setInterval(3000, updateSensor);
