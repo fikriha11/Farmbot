@@ -17,6 +17,7 @@ void setup() {
 
   pinMode(PumpWater, OUTPUT);
   pinMode(PumpFert, OUTPUT);
+  pinMode(power, OUTPUT);
   pinMode(SensorFlowA, INPUT);
   pinMode(SwitchZ, INPUT_PULLUP);
   pinMode(SwitchX, INPUT_PULLUP);
@@ -35,13 +36,14 @@ void setup() {
   digitalWrite(DirZ, LOW);
   digitalWrite(PumpWater, OFF);
   digitalWrite(PumpFert, OFF);
+  digitalWrite(power, OFF);
 
   /* SET RTC */
   // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 
   /* SCHEDULE */
-  timer.setInterval(3000, updateSensor); 
+  timer.setInterval(3000, updateSensor);
 
 }
 
@@ -51,6 +53,7 @@ void loop() {
   timer.run();
   mainloop();
 
+  // trialRelay();
   // trialSensor();
   // TestEEPROM();
   // execution();

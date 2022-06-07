@@ -4,13 +4,16 @@
 RTC_DS3231 rtc;
 SimpleTimer timer;
 
-#define PumpWater 32
-#define PumpFert 34
 #define SwitchZ A1
 #define SwitchX A2
 #define SwitchY A3
 #define SensorFlowA  3
 #define button 47
+
+/* Relay */
+#define PumpWater 32
+#define PumpFert 34
+#define power 36
 
 /* Stepper */
 #define PulseY 12
@@ -169,6 +172,7 @@ void mainloop() {
   }
 
   if (RunningState) {
+    digitalWrite(power, ON);
     execution();
   }
 }
@@ -249,7 +253,7 @@ void execution() {
     case 9:
       homie();
       Count = 0;
-      // Serial.println("SELESAI");
+      digitalWrite(power, OFF);
       RunningState = false;
       break;
   }

@@ -100,12 +100,14 @@ void trialRelay() {
     Serial.println("PumpFert");
     digitalWrite(PumpFert, ON);
   } if (data == "c") {
+    Serial.println("Power");
+    digitalWrite(power, ON);
+  } if (data == "d") {
     Serial.println("OFF");
     digitalWrite(PumpWater, OFF);
     digitalWrite(PumpFert, OFF);
+    digitalWrite(power, OFF);
   }
-
-  Serial.println(FlowA.Count);
 }
 
 void trialSensor() {
