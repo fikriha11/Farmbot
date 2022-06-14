@@ -14,9 +14,9 @@ class GetData():
         self.baris = int(baris)
         self.kolom = int(kolom)
 
-        self.plant_id = ""
-        self.Umur = ""
-        self.umur_panen = ""   
+        self.plant_id = "0"
+        self.Umur = "0"
+        self.umur_panen = "0"   
 
     @property
     def get_database(self):
@@ -55,6 +55,7 @@ class GetData():
                 
     def save(self):
         if self.get_data != None:
+            self.plant_name = self.get_data['plant_name']
             self.plant_id = self.get_data['plant_id']
             self.Umur = self.get_umur
             self.umur_panen = self.get_data['period']     
@@ -69,19 +70,38 @@ class GetData():
         )  
  
 def DataArduino():
+    # Kolom  x Baris
     Tanaman1 = GetData(1,1)
-    Tanaman2 = GetData(1,2)
-    Tanaman3 = GetData(1,3)
-    Tanaman4 = GetData(1,4)
-    Tanaman5 = GetData(2,1)
-    Tanaman6 = GetData(2,2)
-    Tanaman7 = GetData(2,3)
-    Tanaman8 = GetData(2,4)
+    Tanaman2 = GetData(2,1)
+    Tanaman3 = GetData(3,1)
+    Tanaman4 = GetData(4,1)
 
-    return "A{}B{}C{}D{}E{}F{}G{}H{}I".format(
-        Tanaman1.data_send,Tanaman2.data_send,Tanaman3.data_send,
-        Tanaman4.data_send,Tanaman5.data_send,Tanaman6.data_send,
-        Tanaman7.data_send,Tanaman8.data_send,
+    Tanaman5 = GetData(4,2)
+    Tanaman6 = GetData(3,2)
+    Tanaman7 = GetData(2,2)
+    Tanaman8 = GetData(1,2)
+
+    Tanaman9  = GetData(1,3)
+    Tanaman10 = GetData(2,3)
+    Tanaman11 = GetData(3,3)
+    Tanaman12 = GetData(4,3)
+
+    Tanaman13 = GetData(4,4)
+    Tanaman14 = GetData(3,4)
+    Tanaman15 = GetData(2,4)
+    Tanaman16 = GetData(1,4)
+
+    Tanaman17 = GetData(1,5)
+    Tanaman18 = GetData(2,5)
+    Tanaman19 = GetData(3,5)
+    Tanaman20 = GetData(4,5)
+
+    return "A{}B{}C{}D{}E{}F{}G{}H{}I{}J{}K{}L{}M{}N{}O{}P{}Q{}R{}S{}T{}".format(
+        Tanaman1.data_send,Tanaman2.data_send,Tanaman3.data_send,Tanaman4.data_send,
+        Tanaman5.data_send,Tanaman6.data_send,Tanaman7.data_send,Tanaman8.data_send,
+        Tanaman9.data_send,Tanaman10.data_send,Tanaman11.data_send,Tanaman12.data_send,
+        Tanaman13.data_send,Tanaman14.data_send,Tanaman15.data_send,Tanaman16.data_send,
+        Tanaman17.data_send,Tanaman18.data_send,Tanaman19.data_send,Tanaman20.data_send,
     )
 
 def TestSerial():
