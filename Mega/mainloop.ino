@@ -39,7 +39,7 @@ void setup() {
 
 
   digitalWrite(power, ON);
-  homie();
+  // homie();
   digitalWrite(power, OFF);
 
   /* SET RTC */
@@ -59,6 +59,7 @@ void loop() {
   timer.run();
   mainloop();
 
+  // coba();
   // trialRelay();
   // trialSensor();
   // TestEEPROM();

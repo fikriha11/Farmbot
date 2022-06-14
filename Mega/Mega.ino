@@ -26,7 +26,9 @@ SimpleTimer timer;
 
 struct Tanaman {
   int Usia, JenisTanaman, Tanggal, Bulan, Tahun, Panen;
-} Tanaman1, Tanaman2, Tanaman3, Tanaman4, Tanaman5, Tanaman6, Tanaman7, Tanaman8;
+} Tanaman1, Tanaman2, Tanaman3, Tanaman4, Tanaman5, Tanaman6, Tanaman7, Tanaman8,
+Tanaman9, Tanaman10, Tanaman11, Tanaman12, Tanaman13, Tanaman14, Tanaman15, Tanaman16,
+Tanaman17, Tanaman18, Tanaman19, Tanaman20;
 
 const char* nTanaman[] = {
   "Kangkung", "Selada", "Pak Coy", "Bayam", "Sawi Pagoda", "kailan", "Sawi", "Daun Bawang", "Daun Mint", "Seledri"
@@ -194,13 +196,11 @@ void updateSensor() {
 void execution() {
   switch (Count) {
     case 0:
-      // Serial.println("Preparation");
       homie();
       delay(500);
       siram(0);
       break;
     case 1 :
-      // Serial.println("Tanaman 1A");
       gotoY(50);
       delay(500);
       gotoX(50);
@@ -208,52 +208,110 @@ void execution() {
       Running(EEPROM.read(Tanaman1.JenisTanaman), EEPROM.read(Tanaman1.Usia), EEPROM.read(Tanaman1.Panen));
       break;
     case 2 :
-      // Serial.println("Tanaman 2A");
       gotoX(160);
       delay(500);
       Running(EEPROM.read(Tanaman2.JenisTanaman), EEPROM.read(Tanaman2.Usia), EEPROM.read(Tanaman2.Panen));
       break;
     case 3 :
-      // Serial.println("Tanaman 3A");
       gotoX(160);
       delay(500);
       Running(EEPROM.read(Tanaman3.JenisTanaman), EEPROM.read(Tanaman3.Usia), EEPROM.read(Tanaman3.Panen));
       break;
     case 4 :
-      // Serial.println("Tanaman 4A");
       gotoX(190);
       delay(500);
       Running(EEPROM.read(Tanaman4.JenisTanaman), EEPROM.read(Tanaman4.Usia), EEPROM.read(Tanaman4.Panen));
       break;
 
     case 5 :
-      // Serial.println("Tanaman 1B");
       gotoY(190);
       delay(500);
       Running(EEPROM.read(Tanaman5.JenisTanaman), EEPROM.read(Tanaman5.Usia), EEPROM.read(Tanaman5.Panen));
       break;
     case 6 :
-      // Serial.println("Tanaman 2B");
       gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman6.JenisTanaman), EEPROM.read(Tanaman6.Usia), EEPROM.read(Tanaman6.Panen));
       break;
     case 7 :
-      // Serial.println("Tanaman 3B");
       gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman7.JenisTanaman), EEPROM.read(Tanaman7.Usia), EEPROM.read(Tanaman7.Panen));
       break;
     case 8 :
-      // Serial.println("Tanaman 4B");
       gotoX(-170);
       delay(500);
       Running(EEPROM.read(Tanaman8.JenisTanaman), EEPROM.read(Tanaman8.Usia), EEPROM.read(Tanaman8.Panen));
       break;
-    case 9:
+
+
+    case 9 :
+      gotoY(190);
+      delay(500);
+      Running(EEPROM.read(Tanaman9.JenisTanaman), EEPROM.read(Tanaman9.Usia), EEPROM.read(Tanaman9.Panen));
+      break;
+    case 10 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman10.JenisTanaman), EEPROM.read(Tanaman10.Usia), EEPROM.read(Tanaman10.Panen));
+      break;
+    case 11 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman11.JenisTanaman), EEPROM.read(Tanaman11.Usia), EEPROM.read(Tanaman11.Panen));
+      break;
+    case 12 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman12.JenisTanaman), EEPROM.read(Tanaman12.Usia), EEPROM.read(Tanaman12.Panen));
+      break;
+
+    case 13 :
+      gotoY(190);
+      delay(500);
+      Running(EEPROM.read(Tanaman13.JenisTanaman), EEPROM.read(Tanaman13.Usia), EEPROM.read(Tanaman13.Panen));
+      break;
+    case 14 :
+      gotoX(-170);
+      delay(500);
+      Running(EEPROM.read(Tanaman14.JenisTanaman), EEPROM.read(Tanaman14.Usia), EEPROM.read(Tanaman14.Panen));
+      break;
+    case 15 :
+      gotoX(-170);
+      delay(500);
+      Running(EEPROM.read(Tanaman15.JenisTanaman), EEPROM.read(Tanaman15.Usia), EEPROM.read(Tanaman15.Panen));
+      break;
+    case 16 :
+      gotoX(-170);
+      delay(500);
+      Running(EEPROM.read(Tanaman16.JenisTanaman), EEPROM.read(Tanaman16.Usia), EEPROM.read(Tanaman16.Panen));
+      break;
+
+    case 17 :
+      gotoY(190);
+      delay(500);
+      Running(EEPROM.read(Tanaman17.JenisTanaman), EEPROM.read(Tanaman17.Usia), EEPROM.read(Tanaman17.Panen));
+      break;
+    case 18 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman18.JenisTanaman), EEPROM.read(Tanaman18.Usia), EEPROM.read(Tanaman18.Panen));
+      break;
+    case 19 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman19.JenisTanaman), EEPROM.read(Tanaman19.Usia), EEPROM.read(Tanaman19.Panen));
+      break;
+    case 20 :
+      gotoX(170);
+      delay(500);
+      Running(EEPROM.read(Tanaman20.JenisTanaman), EEPROM.read(Tanaman20.Usia), EEPROM.read(Tanaman20.Panen));
+      break;
+
+    case 21:
       homie();
       Count = 0;
-      digitalWrite(power, OFF);
+      digitalWrite  (power, OFF);
       RunningState = false;
       break;
   }
