@@ -9,8 +9,8 @@ from threading import *
 from gtexttospeech import TextToSpeech
 from getData import DataArduino, GetData
 
-serialPort = "/dev/ttyACM0"
-# serialPort = "/dev/ttyUSB0"
+# serialPort = "/dev/ttyACM0"
+serialPort = "/dev/ttyUSB0"
 
 baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
@@ -357,7 +357,7 @@ def GetDatabase():
   G25 = CheckTanman(2,5)
   G26 = CheckTanman(2,6)
 
-  G31 = CheckTanman(3,3)
+  G31 = CheckTanman(3,1)
   G32 = CheckTanman(3,2)
   G33 = CheckTanman(3,3)
   G34 = CheckTanman(3,4)
