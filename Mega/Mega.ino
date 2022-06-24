@@ -1,6 +1,10 @@
 #include <EEPROM.h>
 #include "RTClib.h"
 #include <SimpleTimer.h>
+#include <Servo.h>
+
+Servo Servo1;
+Servo Servo2;
 RTC_DS3231 rtc;
 SimpleTimer timer;
 

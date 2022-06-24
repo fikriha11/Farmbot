@@ -1,5 +1,17 @@
 
 void homie() {
+
+  //  Serial.println("home: Z");
+  digitalWrite(DirZ, HIGH);
+  digitalRead(SwitchZ);
+
+  do {
+    digitalWrite(PulseZ, HIGH);
+    delayMicroseconds(200); //Set Value
+    digitalWrite(PulseZ, LOW);
+    delayMicroseconds(200); //Set Value
+  } while (digitalRead(SwitchZ) == HIGH);
+
   // Serial.println("home: X");
   digitalWrite(DirX, HIGH);
   digitalRead(SwitchX);
@@ -20,24 +32,11 @@ void homie() {
     delayMicroseconds(200); //Set Value
   } while (digitalRead(SwitchY) == HIGH);
 
-  /*
-    Serial.println("home: Z");
-    digitalWrite(DirZ, HIGH);
-    digitalRead(SwitchZ);
-
-    do {
-      digitalWrite(PulseZ, HIGH);
-      delayMicroseconds(200); //Set Value
-      digitalWrite(PulseZ, LOW);
-      delayMicroseconds(200); //Set Value
-    } while (digitalRead(SwitchZ) == HIGH);  
-  */
-  
 }
 
 
 void gotoX(long eX) {
-  // Serial.print("Xe--> "); Serial.println(eX);
+  //  Serial.print("Xe--> "); Serial.println(eX);
   eX *= nMM;
 
   if (eX < 0) {

@@ -24,6 +24,11 @@ void setup() {
   pinMode(SwitchY, INPUT_PULLUP);
   pinMode(button, INPUT_PULLUP);
 
+  Servo1.attach(A8);
+  Servo2.attach(A9);
+  Servo1.write(0);
+  Servo2.write(25);
+
   pinMode(PulseX, OUTPUT);
   pinMode(DirX, OUTPUT);
   pinMode(PulseY, OUTPUT);
@@ -37,9 +42,8 @@ void setup() {
   digitalWrite(PumpWater, OFF);
   digitalWrite(PumpFert, OFF);
 
-
   digitalWrite(power, ON);
-  // homie();
+  homie();
   digitalWrite(power, OFF);
 
   /* SET RTC */
@@ -47,10 +51,8 @@ void setup() {
   // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 
 
-
   /* SCHEDULE */
   timer.setInterval(3000, updateSensor);
-
 }
 
 
@@ -58,6 +60,13 @@ void loop() {
   ReceiveData();
   timer.run();
   mainloop();
+
+  // trialServo();
+  // trialRelay();
+
+  // trialFlow();
+  // trialXYZ();
+  // trialSwitch();
 
   // coba();
   // trialRelay();

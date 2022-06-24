@@ -110,6 +110,15 @@ void trialRelay() {
   }
 }
 
+void trialServo() {
+  Servo1.write(0);   // Tutup
+  Servo2.write(25);
+  delay(2000);
+  Servo1.write(25);  // Buka
+  Servo2.write(0);
+  delay(2000);
+}
+
 void trialSensor() {
   Serial.print("Temp: ");
   Serial.print(SHT("Temp"));
