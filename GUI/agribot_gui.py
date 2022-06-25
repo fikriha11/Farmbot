@@ -1,5 +1,6 @@
 from time import sleep, time
 import tkinter.font
+from wsgiref import headers
 import requests
 import cv2
 from serial import Serial
@@ -16,8 +17,8 @@ baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 camPort = 0
 
-path = '/home/pi/Documents/Farmbot/'
-# path = ''
+# path = '/home/pi/Documents/Farmbot/'
+path = ''
 
 root = Tk()
 changefont = tkinter.font.Font(font="montserrat_bold", size=18)
@@ -184,8 +185,6 @@ t46 = Label(frame2, text='-', justify=CENTER, font=changefont,bg="#FFFFFF")
 t46.place(x=699, y=428, anchor=CENTER)
 
 
-
-
 # =========================SERIAL DATA PROCESS===================
 
 def readSerial():
@@ -243,12 +242,12 @@ def playsound(event):
 def showframe(frame):
     frame.tkraise()
 
-def CheckTanman(kolom,baris):
+def CheckTanman(kolom,baris,data):
     Tanaman = {
       "id" : "",
       "nama" : "",
     }
-    data = GetData(kolom,baris)
+    data = GetData(kolom,baris,data)
     data.save()
     if data.plant_id != "0":
       Tanaman['id'] = planted
@@ -340,36 +339,45 @@ def UpdateTanaman():
   t46.config(text = "")
   t46.config(text=G46['nama'])
 
+def query():
+  headers = {
+  'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
+  }
+  url = 'http://farmbot.belajarobot.com/farm/bot/1'
+  query = requests.get(url, headers=headers)
+  query = query.json()
+  return query
 
 def GetDatabase():
   global G11,G12,G13,G14,G15,G16,G21,G22,G23,G24,G25,G26,G31,G31,G32,G33,G34,G35,G36,G41,G42,G43,G44,G45,G46
-  G11 = CheckTanman(1,1)
-  G12 = CheckTanman(1,2)
-  G13 = CheckTanman(1,3)
-  G14 = CheckTanman(1,4)
-  G15 = CheckTanman(1,5)
-  G16 = CheckTanman(1,6)
+  data = query()
+  G11 = CheckTanman(1,1,data)
+  G12 = CheckTanman(1,2,data)
+  G13 = CheckTanman(1,3,data)
+  G14 = CheckTanman(1,4,data)
+  G15 = CheckTanman(1,5,data)
+  G16 = CheckTanman(1,6,data)
 
-  G21 = CheckTanman(2,1)
-  G22 = CheckTanman(2,2)
-  G23 = CheckTanman(2,3)
-  G24 = CheckTanman(2,4)
-  G25 = CheckTanman(2,5)
-  G26 = CheckTanman(2,6)
+  G21 = CheckTanman(2,1,data)
+  G22 = CheckTanman(2,2,data)
+  G23 = CheckTanman(2,3,data)
+  G24 = CheckTanman(2,4,data)
+  G25 = CheckTanman(2,5,data)
+  G26 = CheckTanman(2,6,data)
 
-  G31 = CheckTanman(3,1)
-  G32 = CheckTanman(3,2)
-  G33 = CheckTanman(3,3)
-  G34 = CheckTanman(3,4)
-  G35 = CheckTanman(3,5)
-  G36 = CheckTanman(3,6)
+  G31 = CheckTanman(3,1,data)
+  G32 = CheckTanman(3,2,data)
+  G33 = CheckTanman(3,3,data)
+  G34 = CheckTanman(3,4,data)
+  G35 = CheckTanman(3,5,data)
+  G36 = CheckTanman(3,6,data)
 
-  G41 = CheckTanman(4,1)
-  G42 = CheckTanman(4,2)
-  G43 = CheckTanman(4,3)
-  G44 = CheckTanman(4,4)
-  G45 = CheckTanman(4,5)
-  G46 = CheckTanman(4,6)
+  G41 = CheckTanman(4,1,data)
+  G42 = CheckTanman(4,2,data)
+  G43 = CheckTanman(4,3,data)
+  G44 = CheckTanman(4,4,data)
+  G45 = CheckTanman(4,5,data)
+  G46 = CheckTanman(4,6,data)
 
 def SendSerial():
   print('Update')

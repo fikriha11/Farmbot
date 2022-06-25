@@ -9,20 +9,22 @@ headers = {
 
 class GetData():
 
-    def __init__(self,kolom,baris):
+    def __init__(self,kolom,baris,data):
         self.url = 'http://farmbot.belajarobot.com/farm/bot/1'
-        self.baris = int(baris)
-        self.kolom = int(kolom)
 
         self.plant_id = "0"
         self.Umur = "0"
-        self.umur_panen = "0"   
+        self.umur_panen = "0" 
+        self.get_database = data
+        self.kolom = kolom
+        self.baris = baris
+         
 
-    @property
-    def get_database(self):
-        self.req = requests.get(self.url,headers=headers)   
-        self.req = self.req.json()
-        return self.req
+    # @property
+    # def get_database(self):
+    #     self.req = requests.get(self.url,headers=headers)   
+    #     self.req = self.req.json()
+    #     return self.req
 
     @property
     def get_data(self):
@@ -51,8 +53,7 @@ class GetData():
         self.UmurHari = self.UmurMinggu * 7
 
         return round(self.UmurHari)
-
-                
+          
     def save(self):
         if self.get_data != None:
             self.plant_name = self.get_data['plant_name']
@@ -68,35 +69,44 @@ class GetData():
             self.Umur,
             self.umur_panen,
         )  
+def query():
+  headers = {
+  'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Mobile Safari/537.36'
+  }
+  url = 'http://farmbot.belajarobot.com/farm/bot/1'
+  query = requests.get(url, headers=headers)
+  query = query.json()
+  return query        
  
 def DataArduino():
     # Kolom  x Baris
-    Tanaman1 = GetData(1,1)
-    Tanaman2 = GetData(2,1)
-    Tanaman3 = GetData(3,1)
-    Tanaman4 = GetData(4,1)
+    data = query()
+    Tanaman1 = GetData(1,1,data)
+    Tanaman2 = GetData(2,1,data)
+    Tanaman3 = GetData(3,1,data)
+    Tanaman4 = GetData(4,1,data)
 
-    Tanaman5 = GetData(4,2)
-    Tanaman6 = GetData(3,2)
-    Tanaman7 = GetData(2,2)
-    Tanaman8 = GetData(1,2)
+    Tanaman5 = GetData(4,2,data)
+    Tanaman6 = GetData(3,2,data)
+    Tanaman7 = GetData(2,2,data)
+    Tanaman8 = GetData(1,2,data)
 
-    Tanaman9  = GetData(1,3)
-    Tanaman10 = GetData(2,3)
-    Tanaman11 = GetData(3,3)
-    Tanaman12 = GetData(4,3)
+    Tanaman9  = GetData(1,3,data)
+    Tanaman10 = GetData(2,3,data)
+    Tanaman11 = GetData(3,3,data)
+    Tanaman12 = GetData(4,3,data)
 
-    Tanaman13 = GetData(4,4)
-    Tanaman14 = GetData(3,4)
-    Tanaman15 = GetData(2,4)
-    Tanaman16 = GetData(1,4)
+    Tanaman13 = GetData(4,4,data)
+    Tanaman14 = GetData(3,4,data)
+    Tanaman15 = GetData(2,4,data)
+    Tanaman16 = GetData(1,4,data)
 
-    Tanaman17 = GetData(1,5)
-    Tanaman18 = GetData(2,5)
-    Tanaman19 = GetData(3,5)
-    Tanaman20 = GetData(4,5)
+    Tanaman17 = GetData(1,5,data)
+    Tanaman18 = GetData(2,5,data)
+    Tanaman19 = GetData(3,5,data)
+    Tanaman20 = GetData(4,5,data)
 
-    return "A{}B{}C{}D{}E{}F{}G{}H{}I{}J{}K{}L{}M{}N{}O{}P{}Q{}R{}S{}T{}".format(
+    return "A{}B{}C{}D{}E{}F{}G{}H{}I{}J{}K{}L{}M{}N{}O{}P{}Q{}R{}S{}T{}U".format(
         Tanaman1.data_send,Tanaman2.data_send,Tanaman3.data_send,Tanaman4.data_send,
         Tanaman5.data_send,Tanaman6.data_send,Tanaman7.data_send,Tanaman8.data_send,
         Tanaman9.data_send,Tanaman10.data_send,Tanaman11.data_send,Tanaman12.data_send,
@@ -107,4 +117,3 @@ def DataArduino():
 def TestSerial():
     arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1)
     arduino.write(bytes(DataArduino(), 'utf-8'))
-
