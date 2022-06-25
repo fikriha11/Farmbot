@@ -15,9 +15,6 @@ String SaveData[10];
 String SplitData;
 int StringData;
 
-String DATAA = "A3,9,25B0,0,0C3,4,25D2,4,40E2,6,40F2,1,40G3,4,25H3,0,25I3,1,25J2,1,40K0,0,0L3,1,25M0,0,0N2,1,40O3,1,25P0,0,0Q2,1,40R2,1,40S1,1,20T3,1,25";
-
-
 /*
    Variable Temporary
 */
@@ -142,6 +139,7 @@ void parse(String Data) {
   nR = Data.indexOf("R");
   nS = Data.indexOf("S");
   nT = Data.indexOf("T");
+  nT = Data.indexOf("U");
 
   dA = Data.substring(nA + 1, nB);
   dB = Data.substring(nB + 1, nC);
@@ -187,10 +185,6 @@ void ReceiveData() {
   }
 }
 
-void coba() {
-  parse(DATAA);
-  SaveEEPROM();
-}
 
 void SaveEEPROM() {
   split(dA);
