@@ -17,8 +17,8 @@ baudRate = 9600
 ser = Serial(serialPort, baudRate, timeout=0, writeTimeout=0)
 camPort = 0
 
-# path = '/home/pi/Documents/Farmbot/'
-path = ''
+path = '/home/pi/Documents/Farmbot/'
+# path = ''
 
 root = Tk()
 changefont = tkinter.font.Font(font="montserrat_bold", size=18)
