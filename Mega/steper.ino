@@ -92,3 +92,23 @@ void gotoZ(long Ze) {
     delayMicroseconds(speedDelay); //Set Value
   }
 }
+
+void gotoW(long We) {
+  // Serial.print("W --> "); Serial.println(We);
+  We *= nMM;
+
+  if (We < 0) {
+    digitalWrite(DirW, HIGH);
+    We *= -1;
+  } else
+  {
+    digitalWrite(DirW, LOW);
+  }
+  for (long i = 0; i <= We; i++) {
+    //previousMicros = currentMicros;
+    digitalWrite(PulseW, HIGH);
+    delayMicroseconds(speedDelay); //Set Value
+    digitalWrite(PulseW, LOW);
+    delayMicroseconds(speedDelay); //Set Value
+  }
+}

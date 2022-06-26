@@ -83,6 +83,9 @@ void trialSwitch() {
   Serial.print('\t');
   Serial.print("Y: ");
   Serial.print(digitalRead(SwitchY));
+  Serial.print('\t');
+  Serial.print("W: ");
+  Serial.print(digitalRead(SwitchW));
   Serial.println('\t');
 }
 

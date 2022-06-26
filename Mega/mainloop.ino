@@ -22,6 +22,7 @@ void setup() {
   pinMode(SwitchZ, INPUT_PULLUP);
   pinMode(SwitchX, INPUT_PULLUP);
   pinMode(SwitchY, INPUT_PULLUP);
+  pinMode(SwitchW, INPUT_PULLUP);
   pinMode(button, INPUT_PULLUP);
 
   Servo1.attach(A8);
@@ -35,16 +36,20 @@ void setup() {
   pinMode(DirY, OUTPUT);
   pinMode(PulseZ, OUTPUT);
   pinMode(DirZ, OUTPUT);
+  pinMode(PulseW, OUTPUT);
+  pinMode(DirW, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(SensorFlowA), pulseCounterA, CHANGE);
   digitalWrite(DirX, LOW);
   digitalWrite(DirY, LOW);
   digitalWrite(DirZ, LOW);
+  digitalWrite(DirW, LOW);
+  
   digitalWrite(PumpWater, OFF);
   digitalWrite(PumpFert, OFF);
 
-  digitalWrite(power, ON);
-  homie();
-  digitalWrite(power, OFF);
+  //  digitalWrite(power, ON);
+  //  homie();
+  //  digitalWrite(power, OFF);
 
   /* SET RTC */
   // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));

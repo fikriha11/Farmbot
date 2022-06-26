@@ -1,5 +1,5 @@
 #include <EEPROM.h>
-#include "RTClib.h"
+#include "RTClib.h" 
 #include <SimpleTimer.h>
 #include <Servo.h>
 
@@ -11,6 +11,9 @@ SimpleTimer timer;
 #define SwitchZ A1
 #define SwitchX A2
 #define SwitchY A3
+#define SwitchW A4
+
+
 #define SensorFlowA  3
 #define button 47
 
@@ -20,12 +23,16 @@ SimpleTimer timer;
 #define power 36
 
 /* Stepper */
+
+#define PulseX 8
+#define DirX 7
 #define PulseY 12
 #define DirY 11
 #define PulseZ 10
 #define DirZ 9
-#define PulseX 8
-#define DirX 7
+#define PulseW 21
+#define DirW 22
+
 
 
 struct Tanaman {
@@ -157,11 +164,10 @@ bool CheckJam() {
   mNow = now.minute(), DEC;
 
   if (hNow == 7 and mNow == 0 ) {
-    Pump = PumpFert;
+    Pump = PumpWater;
     return true;
   } else if (hNow == 16 and mNow == 0) {
     Pump = PumpFert;
-    // Pump = PumpWater;
     return true;
   }
   return false;
@@ -174,7 +180,7 @@ void mainloop() {
     RunningState = true;
   } if (Button()) {
     RunningState = true;
-    Pump = PumpFert;
+    Pump = PumpWater;
   }
 
   if (RunningState) {
@@ -189,10 +195,6 @@ void updateSensor() {
     String humid = String(SHT("Hum"));
     String lumen = String(Lumen());
     String moisture = String(Moisture());
-    //  for (int i = 1; i <= 10; i++) {
-    //    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
-    //    delay(2000);
-    //  }
     Serial.println("A" + String(1) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
   }
 }
