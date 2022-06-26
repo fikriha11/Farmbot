@@ -383,8 +383,8 @@ def SendSerial():
   print('Update')
   ser.write(bytes(DataArduino(),'utf-8'))
   print(DataArduino())
-  print('Updated')
   GetDatabase()
+  print('Updated')
 
 def captureImage():
     cap = cv2.VideoCapture(camPort)
