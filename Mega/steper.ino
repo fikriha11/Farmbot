@@ -1,25 +1,38 @@
 
 void homie() {
 
+  // Serial.println("home: L");
+  digitalWrite(DirL, LOW);
+  digitalRead(SwitchL);
+  do {
+    digitalWrite(PulseL, HIGH);
+    delayMicroseconds(2000); //Set Value
+    digitalWrite(PulseL, LOW);
+    delayMicroseconds(2000); //Set Value
+  } while (digitalRead(SwitchL) == HIGH);
+
   //  Serial.println("home: Z");
   digitalWrite(DirZ, HIGH);
   digitalRead(SwitchZ);
 
   do {
     digitalWrite(PulseZ, HIGH);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
     digitalWrite(PulseZ, LOW);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
   } while (digitalRead(SwitchZ) == HIGH);
+
+  //  servotutup();
+  //  delay(1000);
 
   // Serial.println("home: X");
   digitalWrite(DirX, HIGH);
   digitalRead(SwitchX);
   do {
     digitalWrite(PulseX, HIGH);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
     digitalWrite(PulseX, LOW);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
   } while (digitalRead(SwitchX) == HIGH);
 
   // Serial.println("home: Y");
@@ -27,9 +40,9 @@ void homie() {
   digitalRead(SwitchY);
   do {
     digitalWrite(PulseY, HIGH);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
     digitalWrite(PulseY, LOW);
-    delayMicroseconds(200); //Set Value
+    delayMicroseconds(speedDelay); //Set Value
   } while (digitalRead(SwitchY) == HIGH);
 
 }
@@ -93,22 +106,100 @@ void gotoZ(long Ze) {
   }
 }
 
-void gotoW(long We) {
-  // Serial.print("W --> "); Serial.println(We);
-  We *= nMM;
+void gotoL(long Le) {
+  // Serial.print("Z --> "); Serial.println(Ze);
+  Le *= nMM;
 
-  if (We < 0) {
-    digitalWrite(DirW, HIGH);
-    We *= -1;
+  if (Le < 0) {
+    digitalWrite(DirL, LOW);
+    Le *= -1;
   } else
   {
-    digitalWrite(DirW, LOW);
+    digitalWrite(DirL, HIGH);
   }
-  for (long i = 0; i <= We; i++) {
+  for (long i = 0; i <= Le; i++) {
     //previousMicros = currentMicros;
-    digitalWrite(PulseW, HIGH);
-    delayMicroseconds(speedDelay); //Set Value
-    digitalWrite(PulseW, LOW);
-    delayMicroseconds(speedDelay); //Set Value
+    digitalWrite(PulseL, HIGH);
+    delayMicroseconds(2000); //Set Value
+    digitalWrite(PulseL, LOW);
+    delayMicroseconds(2000); //Set Value
   }
+}
+
+void tanam() {
+  homie();
+  delay(1000);
+  gotoY(100); delay(500);
+  gotoX(100); delay(500);
+  servobuka();
+  gotoZ(350); delay(500);
+  gotoL(12); delay(4000);
+  homie();
+
+}
+
+void ambilpipa() {
+  gotoY(20); delay(500);
+  gotoX(107); delay(1000);
+  //gotoZ(35); delay(1000);
+  servobukatitik(); delay(3000);
+  gotoY(-20); delay(1000);
+  gotoZ(27); delay(1000);
+  servotutup(); delay(2000);
+  gotoY(100); delay(500);
+  gotoZ(370); delay(500);
+  gotoL(14); delay(4000);
+
+  // Serial.println("home: L");
+  digitalWrite(DirL, LOW);
+  digitalRead(SwitchL);
+  do {
+    digitalWrite(PulseL, HIGH);
+    delayMicroseconds(2000); //Set Value
+    digitalWrite(PulseL, LOW);
+    delayMicroseconds(2000); //Set Value
+  } while (digitalRead(SwitchL) == HIGH);
+
+  //  Serial.println("home: Z");
+  digitalWrite(DirZ, HIGH);
+  digitalRead(SwitchZ);
+
+  do {
+    digitalWrite(PulseZ, HIGH);
+    delayMicroseconds(speedDelay); //Set Value
+    digitalWrite(PulseZ, LOW);
+    delayMicroseconds(speedDelay); //Set Value
+  } while (digitalRead(SwitchZ) == HIGH);
+
+  gotoY(-100); delay(2000);
+  servobukatitik(); delay(1000);
+  gotoY(20); delay(500);
+  homie();
+}
+
+
+void servobuka() {
+  //  digitalWrite(power, 1); delay(500);
+  Servo1.write(90);
+  //delay(1000);
+  Servo2.write(0);
+  delay(1000);
+  //delay(1000);
+  //  digitalWrite(power, 0); delay(500);
+}
+void servotutup() {
+  //  digitalWrite(power, 1); delay(500);
+  Servo1.write(4);
+  //delay(1000);
+  Servo2.write(89);
+  delay(1000);
+  //  digitalWrite(power, 0); delay(500);
+}
+void servobukatitik() {
+  // digitalWrite(power, 1); delay(500);
+  Servo1.write(20);
+  //delay(1000);
+  Servo2.write(74);
+  delay(1000);
+  // digitalWrite(power, 0); delay(500);
 }

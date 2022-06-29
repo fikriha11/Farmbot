@@ -15,24 +15,65 @@ void trialXYZ() {
   if (Serial.available() > 0) {
     dataTerima = Serial.readStringUntil('\n');
     if (dataTerima == "home") {
+      Serial.println("HOME");
+      digitalWrite(power,0);
+      delay(300);
       homie();
-    } else {
+      digitalWrite(power,1);
+    } else  if (dataTerima == "tanam") {
+      digitalWrite(power,0);
+      delay(300);
+      tanam();
+      digitalWrite(power,1);
+    } else  if (dataTerima == "pipa") {
+      digitalWrite(power,0);
+      delay(300);
+      ambilpipa();
+      digitalWrite(power,1);
+    } 
+    else
+    {
+      //digitalWrite(power,0);
+      //delay(300);
+      int a = dataTerima.indexOf("A");
+      int b = dataTerima.indexOf("B");
       int x = dataTerima.indexOf("X");
       int y = dataTerima.indexOf("Y");
       int z = dataTerima.indexOf("Z");
+      int l = dataTerima.indexOf("L");
       int c = dataTerima.indexOf(";");
       String sLangkah = dataTerima.substring(1, c);
       long langkah = sLangkah.toInt();
 
       if (x > -1) {
+        digitalWrite(power,0);
+        delay(300);
         gotoX(langkah);
       }
       if (y > -1) {
+        digitalWrite(power,0);
+        delay(300);
         gotoY(langkah);
       }
       if (z > -1) {
+        digitalWrite(power,0);
+        delay(300);
         gotoZ(langkah);
       }
+      if (l > -1) {
+        digitalWrite(power,0);
+        delay(300);
+        gotoL(langkah);
+      }
+      if (a > -1) {
+        servobukatitik();;
+        
+      }
+      if (b > -1) {
+        servotutup();
+      }
+      
+      digitalWrite(power,1);
     }
   }
 }
@@ -83,9 +124,6 @@ void trialSwitch() {
   Serial.print('\t');
   Serial.print("Y: ");
   Serial.print(digitalRead(SwitchY));
-  Serial.print('\t');
-  Serial.print("W: ");
-  Serial.print(digitalRead(SwitchW));
   Serial.println('\t');
 }
 
@@ -114,10 +152,10 @@ void trialRelay() {
 }
 
 void trialServo() {
-  Servo1.write(0);   // Tutup
-  Servo2.write(25);
+  Servo1.write(4);   // Tutup
+  Servo2.write(89);
   delay(2000);
-  Servo1.write(25);  // Buka
+  Servo1.write(90);  // Buka
   Servo2.write(0);
   delay(2000);
 }

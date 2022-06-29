@@ -85,7 +85,7 @@ void INISIALISASI() {
 
   Tanaman14.Usia = 40;
   Tanaman14.JenisTanaman = 41;
-  Tanaman14.Panen = 42;
+  Tanaman14.Panen = 41;
 
   Tanaman15.Usia = 43;
   Tanaman15.JenisTanaman = 44;
@@ -139,7 +139,7 @@ void parse(String Data) {
   nR = Data.indexOf("R");
   nS = Data.indexOf("S");
   nT = Data.indexOf("T");
-  nU = Data.indexOf("U");
+  nT = Data.indexOf("U");
 
   dA = Data.substring(nA + 1, nB);
   dB = Data.substring(nB + 1, nC);

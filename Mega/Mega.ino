@@ -1,5 +1,9 @@
+/*
+   OLD VERSION
+*/
+
 #include <EEPROM.h>
-#include "RTClib.h" 
+#include "RTClib.h"
 #include <SimpleTimer.h>
 #include <Servo.h>
 
@@ -11,8 +15,7 @@ SimpleTimer timer;
 #define SwitchZ A1
 #define SwitchX A2
 #define SwitchY A3
-#define SwitchW A4
-
+#define SwitchL A4
 
 #define SensorFlowA  3
 #define button 47
@@ -23,16 +26,14 @@ SimpleTimer timer;
 #define power 36
 
 /* Stepper */
-
-#define PulseX 8
-#define DirX 7
 #define PulseY 12
 #define DirY 11
 #define PulseZ 10
 #define DirZ 9
-#define PulseW 21
-#define DirW 22
-
+#define PulseX 8
+#define DirX 7
+#define PulseL 31
+#define DirL 33
 
 
 struct Tanaman {
@@ -57,14 +58,14 @@ long currentMicros = 0; long previousMicros = 0;
 String dataTerima;
 String dataTrial;
 int limit;
-int Count = 0;
+int Count = 1;
 long nMM = 150;
 int speedDelay = 200;
 
 /** RTC **/
 int tNow = 0; // Tanggal
 int bNow = 0; // Bulan
-int yNow = 0; // Tahun
+int yNow = 0; // Tahun  
 
 int hNow = 0; // Jam
 int mNow = 0; // Menit
@@ -164,10 +165,11 @@ bool CheckJam() {
   mNow = now.minute(), DEC;
 
   if (hNow == 7 and mNow == 0 ) {
-    Pump = PumpWater;
+    Pump = PumpFert;
     return true;
   } else if (hNow == 16 and mNow == 0) {
     Pump = PumpFert;
+    // Pump = PumpWater;
     return true;
   }
   return false;
@@ -180,12 +182,12 @@ void mainloop() {
     RunningState = true;
   } if (Button()) {
     RunningState = true;
-    Pump = PumpWater;
+    Pump = PumpFert;
   }
 
   if (RunningState) {
     digitalWrite(power, ON);
-    execution();
+    SiramTanaman();
   }
 }
 
@@ -195,11 +197,157 @@ void updateSensor() {
     String humid = String(SHT("Hum"));
     String lumen = String(Lumen());
     String moisture = String(Moisture());
+    //  for (int i = 1; i <= 10; i++) {
+    //    Serial.println("A" + String(i) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
+    //    delay(2000);
+    //  }
     Serial.println("A" + String(1) + "B" + temp + "C" + humid + "D" + lumen + "E" + moisture + "F");
   }
 }
 
-void execution() {
+void Lubangi(int x, int y, int z) {
+  int sleep = 500;
+  gotoY(y);
+  delay(sleep);
+  gotoX(x);
+  delay(sleep);
+  gotoZ(z);
+  delay(sleep);
+  gotoL(13);
+}
+
+void ambilTanaman(int x) {
+  int sleep = 500;
+  gotoY(20);
+  delay(sleep);
+  gotoX(x);
+  servobukatitik(); delay(1000);
+  gotoY(-20); delay(1000);
+  gotoZ(27); delay(1000);
+  servotutup(); delay(2000);
+}
+
+void Tanam() {
+  switch (Count) {
+    case 1 :
+      Lubangi(47, 140);
+      delay(500);
+      homie();
+      delay(500);
+      ambilTanaman(2);
+      delay(500);
+      homie();
+      delay(500);
+      Lubangi(47, 140);
+      homie();
+      Count = 0;
+      break;
+
+    case 2:
+      delay(500);
+      Lubangi(120, 140);
+      delay(500);
+      homie();
+    case 3 :
+      delay(500);
+      Lubangi(215, 140);
+      delay(500);
+      homie();
+    case 4:
+      delay(500);
+      Lubangi(290, 140);
+      delay(500);
+      homie();
+
+    case 5 :
+      Lubangi(60, 230);
+      delay(500);
+      homie();
+    case 6:
+      delay(500);
+      Lubangi(120, 230);
+      delay(500);
+      homie();
+    case 7 :
+      delay(500);
+      Lubangi(215, 230);
+      delay(500);
+      homie();
+    case 8:
+      delay(500);
+      Lubangi(290, 230);
+      delay(500);
+      homie();
+
+    case 9 :
+      Lubangi(60, 310);
+      delay(500);
+      homie();
+    case 10:
+      delay(500);
+      Lubangi(120, 310);
+      delay(500);
+      homie();
+    case 11 :
+      delay(500);
+      Lubangi(215, 310);
+      delay(500);
+      homie();
+    case 12:
+      delay(500);
+      Lubangi(290, 400);
+      delay(500);
+      homie();
+
+    case 13 :
+      Lubangi(60, 400);
+      delay(500);
+      homie();
+    case 14:
+      delay(500);
+      Lubangi(120, 400);
+      delay(500);
+      homie();
+    case 15 :
+      delay(500);
+      Lubangi(215, 400);
+      delay(500);
+      homie();
+    case 16:
+      delay(500);
+      Lubangi(290, 400);
+      delay(500);
+      homie();
+
+    case 17 :
+      Lubangi(60, 310);
+      delay(500);
+      homie();
+    case 18:
+      delay(500);
+      Lubangi(120, 310);
+      delay(500);
+      homie();
+    case 19 :
+      delay(500);
+      Lubangi(215, 310);
+      delay(500);
+      homie();
+    case 20:
+      delay(500);
+      Lubangi(290, 310);
+      delay(500);
+      homie();
+
+      Count = 0;
+      break;
+
+    default :
+      break;
+  }
+}
+
+void SiramTanaman() {
   switch (Count) {
     case 0:
       homie();
